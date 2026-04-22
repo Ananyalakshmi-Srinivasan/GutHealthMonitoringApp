@@ -1,3 +1,6 @@
+Below is a copy of my Second Year Software Engineering Project. I worked as Project Manager on this project and have made this copy with the intention of completing some of the changes we have mentioned in the 'Next Steps' section of our Handover documentation. 
+
+
 # Gut Health Monitoring App - Second Year Group Software Engineering Project
 <img width="650" height="175" alt="image" src="https://storage.googleapis.com/msgsndr/xYCrZNFIGAeWEm3RsHo3/media/6501a1ba892e5d3dde740127.png" /><br><br>
 
