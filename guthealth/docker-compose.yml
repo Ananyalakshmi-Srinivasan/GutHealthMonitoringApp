@@ -1,0 +1,30 @@
+services:
+
+  app:
+    env_file: .env
+    image: 'gutapp:latest'
+    build:
+     context: ${DOCKERFILE}
+    container_name: gutapp
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - SPRING_DATASOURCE_URL=${DB_URL}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+    ports:
+      - "8080:80"
+
+  db:
+    image: 'postgres:15'
+    container_name: gutapp_db
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:80"

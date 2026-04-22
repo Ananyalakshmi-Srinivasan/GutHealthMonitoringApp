@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "231567506435",
+    "project_id": "guthealth-6e95b",
+    "storage_bucket": "guthealth-6e95b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231567506435:android:cb3b9d952de0bbbdd62236",
+        "android_client_info": {
+          "package_name": "com.example.guthealth_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEOxOos3J9MJdbL-YDOu6smKfAzqfJe2M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

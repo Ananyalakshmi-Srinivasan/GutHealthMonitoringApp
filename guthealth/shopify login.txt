@@ -1,0 +1,52 @@
+//    @Value("${shopify.api.key}")
+//    private String apiKey;
+//
+//    @Value("${shopify.api.secret}")
+//    private String apiSecret;
+//
+//    @Value("${shopify.redirect.uri}")
+//    private String redirectUri;
+//
+//    @Value("${shopify.api.scopes}")
+//    private String scopes;
+//
+//    private final RestTemplate restTemplate = new RestTemplate();
+//
+//    //generate login url
+//    @GetMapping("/login")
+//    public Map<String, String> login(@RequestParam String shop) {
+//    String authorizationUrl = string.format("https://..."+"/admin/oauth/authorize")
+//            .queryParam("client_id", apiKey),
+//            .queryParam("scope", scopes),
+//            .queryParam("redirect_uri", redirectUri),
+//            .queryParam("state", "random_state_string")
+//            .toUriSting()
+//    return Map.of("authorization_url", authorizationUrl);
+//    }
+//
+//    //receive callback from shopify
+//    @GetMapping("/callback")
+//    public ResponseEntity<?> callback(
+//        @RequestParam String code,
+//        @RequestParam String shop,
+//        @RequestParam State state)
+//    {
+//
+//        // Exchange code for access token
+//        String accessTokenUrl = String.format("https://..."+ shop"/admin/oauth/access_token");
+//
+//        Map<String, String> body = Map.of(
+//            "client_id", apiKey,
+//            "client_secret", apiSecret,
+//            "code", code
+//        )
+//
+//        Map<String, String> response = restTemplate.postForObject(accessTokenUrl, body, Map.class);
+//
+//        String accessToken = (String) response.get("access_token");
+//
+//        System.out.println("Access Token: " + shop ":" + accessToken);
+//
+//        return "Shopify API access token received";
+//
+//    }
