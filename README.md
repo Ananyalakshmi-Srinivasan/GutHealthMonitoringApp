@@ -1,5 +1,5 @@
 >[!Note]
->Below is a copy of my Second Year Software Engineering Project. I worked as Project Manager on this project and have made this copy with >the intention of completing some of the changes we have mentioned in the 'Next Steps' section of our Handover documentation. 
+>Below is a copy of my Second Year Software Engineering Project. I worked as Project Manager on this project and have made this copy with the intention of completing some of the changes we have mentioned in the 'Next Steps' section of our Handover documentation. 
 
 
 # Gut Health Monitoring App - Second Year Group Software Engineering Project
