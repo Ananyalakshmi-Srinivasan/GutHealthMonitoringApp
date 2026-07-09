@@ -1,0 +1,28 @@
+name: Other Issue
+description: Some other issue that is neither a feature request nor a bug report.
+projects: ["spe-uob/2025-GutHealthMonitoringApp"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for filling out an issue form for Gut Health Monitoring App. Please fill out the following information to help us understand your issue.
+  - type: markdown
+    attributes:
+      value: |
+        Please add all relevant issue metadata to your issue. This includes all relevant: assignees, labels, milestone and relevant branches/pull requests.  
+  - type: textarea
+    id: issue-description
+    attributes:
+      label: Issue Description
+      description: A clear and concise description of the issue.
+      placeholder: Describe the issue here.
+    validations:
+      required: true
+  - type: textarea
+    id: additional-information
+    attributes:
+      label: Additional Information
+      description: Add any other context about the issue here.
+      placeholder: Add any other context about the issue here.
+    validations:
+      required: false

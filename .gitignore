@@ -1,0 +1,94 @@
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+*.code-workspace
+.history/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Maven (Java/Spring Boot)
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+**/pom.xml.next
+**/release.properties
+**/dependency-reduced-pom.xml
+**/buildNumber.properties
+**/.mvn/timing.properties
+
+# Flutter/Dart
+**/build/
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub/
+# Note: pubspec.lock should be committed for apps (not ignored)
+
+# Android
+**/local.properties
+guthealth_app/android/key.properties
+**/*.keystore
+**/*.jks
+**/.gradle/
+**/gradle-wrapper.jar
+**/captures/
+
+# iOS
+**/ios/**/xcuserdata/
+**/ios/**/DerivedData/
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/Flutter/ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/*.xcworkspace
+**/*.xcuserstate
+
+# macOS (Flutter)
+**/macos/Flutter/ephemeral/
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/xcuserdata/
+
+# Environment variables
+guthealth/.env
+.env.*
+!.env.example
+
+# Sensitive files
+**/*shopify*.txt
+**/*login*.txt
+**/credentials*
+**/secrets*
+**/*secret*
+**/*password*
+guthealth_app/android/key.properties
+**/*token*
+
+# Logs
+*.log
+**/logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+guthealth/secrets/serviceAccountKey.json

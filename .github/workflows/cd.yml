@@ -1,0 +1,137 @@
+name: CD
+
+on:
+  push:
+    branches: [ main, dev ]
+  # pull_request:
+  #   branches: [ main, dev ]
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: guthealth
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      
+      - name: Create firebase service account key
+        env:
+          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          mkdir -p secrets
+          printf '%s' "$FIREBASE_CREDENTIALS_JSON" > secrets/serviceAccountKey.json
+
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo DB_URL=${{ secrets.DB_URL }} >> .env
+          echo DB_USERNAME=${{ secrets.DB_USERNAME }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo FIREBASE_CREDENTIALS=./secrets/serviceAccountKey.json >> .env
+    
+      - name: Build with Maven
+        run: mvn clean install -DskipTests
+
+      - name: List Dirs
+        run: ls -la target/
+    
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v4
+
+      - name: Setup Docker BuildX
+        uses: docker/setup-buildx-action@v4
+
+#      - name: Configure Amazon Web Service Credentials
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+#          aws-region: eu-north-1
+#
+#      - name: Login to Amazon Elastic Container Registry
+#        id: login-ecr
+#        uses: aws-actions/amazon-ecr-login@v2
+#        with:
+#          registry-type: public
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v7
+        with:
+          context: ./guthealth
+          file: ./guthealth/Dockerfile
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/gutapp:latest
+          platforms: linux/amd64, linux/arm64/v8
+
+
+#      - name: Deploy application
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.EC2_HOST }}
+#          username: ec2-user
+#          key: ${{ secrets.EC2_PRIVATE_KEY }}
+#          script: |
+#            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+#            docker pull ghcr.io/spe-uob/gutapp:latest
+#            docker stop gutapp || true
+#            docker rm gutapp || true
+#            docker run ghcr.io/spe-uob/gutapp:latest
+
+#  build-frontend:
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: guthealth_app
+#    permissions:
+#      contents: read
+#      packages: write
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Flutter packages
+#        uses: flutter-actions/setup-flutter@v4
+#        with:
+#          channel: stable
+#          version: 3.35.5
+#
+#      - name: Install dependencies
+#
+#        run: flutter pub get
+#
+#      - name: Analyze project source
+#        run: dart analyze
+#
+#      - name: Flutter Release
+#        uses: cedvdb/action-flutter-build-android@v1
+#        with:
+#          keystore-base64: ${{ secrets.FLUTTER_RELEASE_KEY }}
+#          keystore-password: "${{ secrets.FLUTTER_RELEASE_KEY_PASSWORD }}"
+#          # optionals
+#          build-cmd: flutter build apk
+#          working-directory: ./guthealth_app
+#
+#      - name: Archive APK
+#        uses: actions/upload-artifact@v7
+#        with:
+#          name: release-apk
+#          # Try running the build locally with the build command to be sure of this path
+#          path: build/app/outputs/flutter-apk/app-release.apk
