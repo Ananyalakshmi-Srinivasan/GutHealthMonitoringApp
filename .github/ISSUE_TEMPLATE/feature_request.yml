@@ -23,6 +23,7 @@ body:
         - GHA FoodLog (`gha-foodlog`)
         - GHA Recipe (`gha-recipe`)
         - GHA General (`gha-general`)
+        - GHA Security (`gha-security`)
       multiple: true
     validations:
       required: true
