@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/login_screen.dart';
+import 'screens/home_screen.dart';
 import 'firebase_options.dart';
 import 'services/fcm_service.dart';
 import 'dart:async';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Poppins', brightness: Brightness.dark),
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+      home: const HomeScreen(customerId: 1),
     );
   }
 }
