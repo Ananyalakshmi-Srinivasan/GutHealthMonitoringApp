@@ -86,7 +86,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
       return;
     }
 
-    final url = Uri.parse('http://ec2-51-21-76-143.eu-north-1.compute.amazonaws.com:8080/api/mood/submit');
+    final url = Uri.parse('http://localhost:8080/api/mood/submit');
 
     final body = {
       "emotions": selectedEmotions.map((emotion) => emotion.id).toList(),

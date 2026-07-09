@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ferrocalm app',
-      theme: ThemeData(fontFamily: 'Poppins'),
+      theme: ThemeData(fontFamily: 'Poppins', brightness: Brightness.dark),
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       home: const LoginScreen(),
