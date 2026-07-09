@@ -19,9 +19,10 @@ body:
       description: Which sub-project would this feature be implemented in?
       options:
         - GHA Survey (`gha-survey`)
-        - GHA F/M (`gha-f/m`)
-        - GHA FrontEnd (`gha-frontend`)
-        - GHA Backend (`gha`)
+        - GHA MoodLog (`gha-moodlog`)
+        - GHA FoodLog (`gha-foodlog`)
+        - GHA Recipe (`gha-recipe`)
+        - GHA General (`gha-general`)
       multiple: true
     validations:
       required: true
