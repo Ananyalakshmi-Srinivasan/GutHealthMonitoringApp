@@ -1,6 +1,6 @@
 name: Other Issue
 description: Some other issue that is neither a feature request nor a bug report.
-projects: ["spe-uob/2025-GutHealthMonitoringApp"]
+projects: ["Ananyalakshmi-Srinivasan/GutHealthMonitoringApp"]
 body:
   - type: markdown
     attributes:

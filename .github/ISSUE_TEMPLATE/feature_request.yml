@@ -2,7 +2,7 @@ name: Feature Request
 description: Request a new feature.
 title: "[FEATURE]: "
 labels: ["enhancement"]
-projects: ["spe-uob/2025-GutHealthMonitoringApp"]
+projects: ["Ananyalakshmi-Srinivasan/GutHealthMonitoringApp"]
 body:
   - type: markdown
     attributes:

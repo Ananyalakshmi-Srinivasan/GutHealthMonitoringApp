@@ -2,7 +2,7 @@ name: Bug Report
 description: Submit a bug report.
 title: "[BUG]: "
 labels: ["bug"]
-projects: ["spe-uob/2025-GutHealthMonitoringApp"]
+projects: ["Ananyalakshmi-Srinivasan/GutHealthMonitoringApp"]
 body:
   - type: markdown
     attributes:
