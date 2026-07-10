@@ -19,6 +19,10 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
+    public Long getResponseID(SurveyResponse response) {
+        return response.getSurveyID();
+    }
+
     // get responses from Survey Response entity
     public List<SurveyResponse> getResponseByID(Long ID) {
        return surveyRepository.findBySurveyID(ID);
