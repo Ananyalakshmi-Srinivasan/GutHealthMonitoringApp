@@ -37,7 +37,19 @@ public class SurveyController {
         LocalDate now = LocalDate.now();
         Long customerID = 1L;
         Customer customer = customerService.getCustomerByID(customerID);
-        return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+
+        if surveyService.responseExists(response) {
+            return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+//        } else {
+//            return surveyService.updateResponse()
+//        }
+
+
+
+
+
+
+
     }
 
     @GetMapping("/export")
