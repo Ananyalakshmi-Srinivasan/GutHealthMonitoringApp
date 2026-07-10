@@ -53,6 +53,16 @@ public class SurveyService {
         }
         return null;
     }
+    boolean responseExists(SurveyResponse response) {
+
+        if (getResponseID(response) != null) {
+            return true;
+        } else  {
+            return false;
+        }
+
+    }
+
 
     // delete Survey Responses
     public void deleteSurveyResponse(Long id) {
