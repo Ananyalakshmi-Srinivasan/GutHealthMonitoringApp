@@ -58,12 +58,13 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins',
           brightness: Brightness.dark,
           primaryColor: Color(0xFF35EBFF),
-          scaffoldBackgroundColor: const Color(0xFF393737),
-          appBarTheme: AppBarTheme(backgroundColor: const Color(0xFF090808),
+          scaffoldBackgroundColor: const Color(0xFF191919),
+          appBarTheme: AppBarTheme(backgroundColor: const Color(
+              0xFF090808),
             centerTitle: true,),
           bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(
               0xFF090808),
-              selectedItemColor: Colors.white,
+              selectedItemColor: Colors.white, //const Color(0xFFE0868D),
               unselectedItemColor: Colors.white.withValues(alpha: 0.7))
           //  textTheme: TextTheme(headlineLarge: TextStyle().copyWith(fontSize: 25, fontWeight: FontWeight.bold, color: Color(0xFF35EBFF)),
           //      headlineMedium: TextStyle().copyWith(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white)
