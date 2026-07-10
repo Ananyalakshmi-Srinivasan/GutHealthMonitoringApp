@@ -103,7 +103,6 @@ public class CustomerService {
         System.out.println("Customer not found!!!!");
         return null;
     }
-
     public Customer updatePassword(String email, String newPassword) {
         if (customerExists(email)) {
             Customer customer = getCustomerByEmail(email);
