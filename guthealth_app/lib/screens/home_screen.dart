@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-
   void _handleViewPreviousData() {
     // Implement navigation to previous data screen
     Navigator.push(
@@ -88,11 +87,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white, removing as establishing theme in one place to ensure consistency
       // top navigation bar
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1B9FAE),
+        //centerTitle: true,
+        //backgroundColor: const Color(0xFF1B9FAE),
         // profile button
         leading: IconButton(
           icon: const Icon(Icons.person),
@@ -216,9 +215,9 @@ class _HomeScreenState extends State<HomeScreen> {
           currentIndex: _currentIndex,
           onTap: _handleBottomNavigation,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color(0xFF1B9FAE),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withValues(alpha: 0.7),
+          //backgroundColor: const Color(0xFF1B9FAE),
+          //selectedItemColor: Colors.white,
+          //unselectedItemColor: Colors.white.withValues(alpha: 0.7),
 
           selectedLabelStyle: const TextStyle(
             fontFamily: 'Poppins',
