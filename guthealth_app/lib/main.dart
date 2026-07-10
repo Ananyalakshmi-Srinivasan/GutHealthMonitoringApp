@@ -42,7 +42,33 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Ferrocalm app',
-      theme: ThemeData(fontFamily: 'Poppins', brightness: Brightness.dark),
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+          fontFamily: 'Poppins',
+          brightness: Brightness.light,
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: AppBarTheme(backgroundColor: const Color(0xFF1B9FAE),
+                                   centerTitle: true,),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(0xFF1B9FAE),
+                                                                selectedItemColor: Colors.white,
+                                                                unselectedItemColor: Colors.white.withValues(alpha: 0.7))
+        ),
+
+      darkTheme: ThemeData(
+          fontFamily: 'Poppins',
+          brightness: Brightness.dark,
+          primaryColor: Color(0xFF35EBFF),
+          scaffoldBackgroundColor: const Color(0xFF393737),
+          appBarTheme: AppBarTheme(backgroundColor: const Color(0xFF090808),
+            centerTitle: true,),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(
+              0xFF090808),
+              selectedItemColor: Colors.white,
+              unselectedItemColor: Colors.white.withValues(alpha: 0.7))
+          //  textTheme: TextTheme(headlineLarge: TextStyle().copyWith(fontSize: 25, fontWeight: FontWeight.bold, color: Color(0xFF35EBFF)),
+          //      headlineMedium: TextStyle().copyWith(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white)
+          // )
+      ),
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       home: const HomeScreen(customerId: 1),
