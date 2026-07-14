@@ -32,6 +32,10 @@ public class SurveyService {
        return surveyRepository.findBySurveyID(ID);
     }
 
+    public List<SurveyResponse> getResponseByDate(LocalDate date) {
+        return surveyRepository.findBySurveyDate(date);
+    }
+
     public List<SurveyResponse> getAllResponses() {
         return surveyRepository.findAll();
     }
