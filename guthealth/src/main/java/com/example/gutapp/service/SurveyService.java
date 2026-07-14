@@ -19,8 +19,8 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    public Long getResponseID(SurveyResponse response) {
-        return response.getSurveyID();
+    public Long getDateCompleted(SurveyResponse response) {
+        return response.getDateCompleted();
     }
 
     // get responses from Survey Response entity
