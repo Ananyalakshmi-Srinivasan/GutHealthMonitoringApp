@@ -39,16 +39,9 @@ public class SurveyController {
 
         if surveyService.responseExists(response) {
             return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
-//        } else {
-//            return surveyService.updateResponse()
-//        }
-
-
-
-
-
-
-
+        } else {
+            return surveyService.updateResponse(surveyService.getResponseID(response), response)
+        }
     }
 
     @GetMapping("/export")
