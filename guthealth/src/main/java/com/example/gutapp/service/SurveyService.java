@@ -19,7 +19,11 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    public Long getDateCompleted(SurveyResponse response) {
+    // get ID components of a response
+    public Long getResponseID(SurveyResponse response) {
+        return response.getSurveyID();
+    }
+    public Long getResponseDate(SurveyResponse response) {
         return response.getDateCompleted();
     }
 
