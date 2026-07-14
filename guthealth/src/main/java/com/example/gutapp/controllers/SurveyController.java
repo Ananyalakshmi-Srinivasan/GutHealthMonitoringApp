@@ -38,7 +38,7 @@ public class SurveyController {
         Customer customer = customerService.getCustomerByID(customerID);
 
         if (surveyService.getResponseDate(response) == now) {
-            return surveyService.updateResponse(surveyService.getResponseID(response),response);
+            return surveyService.updateResponse(surveyService.getResponseDate(response),response);
         } else {
             return surveyService.createResponse(response, now, customer);
         }

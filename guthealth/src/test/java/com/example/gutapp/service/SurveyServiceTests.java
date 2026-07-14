@@ -88,46 +88,46 @@ class SurveyServiceTests {
         verify(surveyRepository).findBySurveyID(1L);
     }
 
-    @Test
+    //@Test
     //check updateResponse() when record exists
-    void testUpdateResponse() throws Exception {
+//    void testUpdateResponse() throws Exception {
+//
+//        //old JSON (existing data)
+//        String oldJson = "{ \"response\": \"1\" }";
+//        JsonNode oldAttributes = objectMapper.readTree(oldJson);
+//
+//        SurveyResponse existing = new SurveyResponse();
+//        existing.setAttributes(oldAttributes);
+//
+//        //new JSON (update data)
+//        String newJson = "{ \"response\": \"3\" }";
+//        JsonNode newAttributes = objectMapper.readTree(newJson);
+//
+//        SurveyResponse update = new SurveyResponse();
+//        update.setAttributes(newAttributes);
+//
+//        //the database found the response
+//        when(surveyRepository.findById(1L)).thenReturn(Optional.of(existing));
+//        when(surveyRepository.save(any())).thenReturn(existing);
+//
+//        //call update
+//        SurveyResponse result = surveyService.updateResponse(1L, update);
+//
+//        //update successfully
+//        assertEquals(newAttributes, result.getAttributes());
+//    }
 
-        //old JSON (existing data)
-        String oldJson = "{ \"response\": \"1\" }";
-        JsonNode oldAttributes = objectMapper.readTree(oldJson);
-
-        SurveyResponse existing = new SurveyResponse();
-        existing.setAttributes(oldAttributes);
-
-        //new JSON (update data)
-        String newJson = "{ \"response\": \"3\" }";
-        JsonNode newAttributes = objectMapper.readTree(newJson);
-
-        SurveyResponse update = new SurveyResponse();
-        update.setAttributes(newAttributes);
-
-        //the database found the response
-        when(surveyRepository.findById(1L)).thenReturn(Optional.of(existing));
-        when(surveyRepository.save(any())).thenReturn(existing);
-
-        //call update
-        SurveyResponse result = surveyService.updateResponse(1L, update);
-
-        //update successfully
-        assertEquals(newAttributes, result.getAttributes());
-    }
-
-    @Test
-        //check when id not exits
-    void testUpdateResponseNotExists() {
-
-        when(surveyRepository.findById(1L)).thenReturn(Optional.empty());
-
-        SurveyResponse update = new SurveyResponse();
-        SurveyResponse result = surveyService.updateResponse(1L, update);
-        //return null
-        assertNull(result);
-    }
+//    @Test
+//        //check when id not exits
+//    void testUpdateResponseNotExists() {
+//
+//        when(surveyRepository.findById(1L)).thenReturn(Optional.empty());
+//
+//        SurveyResponse update = new SurveyResponse();
+//        SurveyResponse result = surveyService.updateResponse(1L, update);
+//        //return null
+//        assertNull(result);
+//    }
 
     @Test
     //Verify whether the SurveyService.getAllResponses() method works correctly

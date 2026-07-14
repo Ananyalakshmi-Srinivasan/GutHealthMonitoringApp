@@ -23,7 +23,7 @@ public class SurveyService {
     public Long getResponseID(SurveyResponse response) {
         return response.getSurveyID();
     }
-    public Long getResponseDate(SurveyResponse response) {
+    public LocalDate getResponseDate(SurveyResponse response) {
         return response.getDateCompleted();
     }
 
@@ -36,13 +36,16 @@ public class SurveyService {
         return surveyRepository.findBySurveyDate(date);
     }
 
-    public List<SurveyResponse> getAllResponsesForCustomer(Long customerID) {
+    public List<SurveyResponse> getAllResponses() {
+        return surveyRepository.findAll();
+    }
+    public List<SurveyResponse> getAllResponsesForCustomer(Customer customer) {
         List<SurveyResponse> responses = new ArrayList<SurveyResponse>();
 
-        List<SurveyResponse> allResponses = surveyRepository.findAll();
+        List<SurveyResponse> allResponses = getAllResponses();
 
         for (SurveyResponse response : allResponses){
-            if (response.getCustomerID() == customerID)
+            if (response.getCustomerID() == customer)
             {
                 responses.add(response);
             }
@@ -61,12 +64,14 @@ public class SurveyService {
 
     // update function to allow customers to update previous responses to surveys
     public SurveyResponse updateResponse(LocalDate date, SurveyResponse responseDetails) {
-        SurveyResponse existingResponse = getResponseByDate(date);
+        List<SurveyResponse> response = getResponseByDate(date);
 
-        //save response
-        existingResponse.setAttributes(responseDetails.getAttributes());
-        return surveyRepository.save(existingResponse);
-
+        if (!(response.isEmpty())) {
+            SurveyResponse existingResponse = response.get(0);
+            //save response
+            existingResponse.setAttributes(responseDetails.getAttributes());
+            return surveyRepository.save(existingResponse);
+        }
         return null;
     }
     boolean responseExists(LocalDate date) {
