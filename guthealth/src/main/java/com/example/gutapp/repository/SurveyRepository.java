@@ -12,7 +12,8 @@ import java.util.List;
 public interface SurveyRepository extends JpaRepository<SurveyResponse, Long> {
 
     //can see all answer form this id
-    List<SurveyResponse> findBySurveyID(Long surveyID);
+    SurveyResponse findBySurveyID(Long surveyID);
+    SurveyResponse findBySurveyDate(LocalDate surveyDate);
 
     //Native SQL query specifically designed to provide data for front-end line charts
     //the return type is List<Object[]>, because only extracted two columns of data.

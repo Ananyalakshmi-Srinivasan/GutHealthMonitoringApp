@@ -34,13 +34,13 @@ public class SurveyController {
     @PostMapping("/submit")
     public SurveyResponse saveResponse(@RequestBody SurveyResponse response) {
         LocalDate now = LocalDate.now();
-        Long customerID = 1L;
+        Long customerID = 1L;  // 1 is the dummy customerid for now
         Customer customer = customerService.getCustomerByID(customerID);
 
-        if surveyService.responseExists(response) {
-            return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+        if (surveyService.getResponseDate(response) == now) {
+            return surveyService.updateResponse(surveyService.getResponseID(response),response);
         } else {
-            return surveyService.updateResponse(surveyService.getResponseID(response), response)
+            return surveyService.createResponse(response, now, customer);
         }
     }
 

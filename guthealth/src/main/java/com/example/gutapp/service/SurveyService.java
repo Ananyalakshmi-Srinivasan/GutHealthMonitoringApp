@@ -27,7 +27,7 @@ public class SurveyService {
         return response.getDateCompleted();
     }
 
-    // get responses from Survey Response entity
+    // get responses from Survey Response entity using ID
     public List<SurveyResponse> getResponseByID(Long ID) {
        return surveyRepository.findBySurveyID(ID);
     }
@@ -59,21 +59,19 @@ public class SurveyService {
         return surveyRepository.save(response);
     }
 
-    //update function to allow customers to update previous responses to surveys
-    // (no implementation in front end yet but this can be extended in the future)
-    public SurveyResponse updateResponse(Long id, SurveyResponse responseDetails) {
-        Optional<SurveyResponse> response = surveyRepository.findById(id);
+    // update function to allow customers to update previous responses to surveys
+    public SurveyResponse updateResponse(LocalDate date, SurveyResponse responseDetails) {
+        SurveyResponse existingResponse = getResponseByDate(date);
+
         //save response
-        if (response.isPresent()) {
-            SurveyResponse existingResponse = response.get();
-            existingResponse.setAttributes(responseDetails.getAttributes());
-            return surveyRepository.save(existingResponse);
-        }
+        existingResponse.setAttributes(responseDetails.getAttributes());
+        return surveyRepository.save(existingResponse);
+
         return null;
     }
-    boolean responseExists(SurveyResponse response) {
+    boolean responseExists(LocalDate date) {
 
-        if (getResponseID(response) != null) {
+        if (getResponseByDate(date) != null) {
             return true;
         } else  {
             return false;
