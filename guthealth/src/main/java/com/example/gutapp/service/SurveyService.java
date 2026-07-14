@@ -36,7 +36,17 @@ public class SurveyService {
         return surveyRepository.findBySurveyDate(date);
     }
 
-    public List<SurveyResponse> getAllResponses() {
+    public List<SurveyResponse> getAllResponsesForCustomer(Long customerID) {
+        List<SurveyResponse> responses = new ArrayList<SurveyResponse>();
+
+        List<SurveyResponse> allResponses = surveyRepository.findAll();
+
+        for (SurveyResponse response : allResponses){
+            if (response.getCustomerID() == customerID)
+            {
+                responses.add(response);
+            }
+        }
         return surveyRepository.findAll();
     }
 
