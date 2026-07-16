@@ -99,15 +99,42 @@ class MyApp extends StatelessWidget {
             centerTitle: true,),
           bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(
               0xFF090808),
-              selectedItemColor: Colors.white, //const Color(0xFFE0868D),
-              unselectedItemColor: Colors.white.withValues(alpha: 0.7))
-          //  textTheme: TextTheme(headlineLarge: TextStyle().copyWith(fontSize: 25, fontWeight: FontWeight.bold, color: Color(0xFF35EBFF)),
-          //      headlineMedium: TextStyle().copyWith(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white)
-          // )
-      ),
-      navigatorKey: navigatorKey,
-      debugShowCheckedModeBanner: false,
-      home: const HomeScreen(customerId: 1),
+              selectedItemColor: const Color(0xFFE0868D), //const Color(0xFFE0868D),
+              unselectedItemColor: Colors.white.withValues(alpha: 0.7),
+              selectedLabelStyle: const TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w600,
+              ),
+              unselectedLabelStyle: const TextStyle(
+                fontFamily: 'Poppins',
+              )),
+          textTheme: TextTheme(
+            displayLarge: const TextStyle(
+              color: Color(0xFFE0868D),
+              fontSize: 50,
+              fontWeight: FontWeight.w500,
+
+            ),
+            titleLarge: const TextStyle(
+              color: Color(0xFFE0868D),
+              fontSize: 30,
+              fontWeight: FontWeight.w500,
+            ),
+            bodyLarge: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+            bodySmall: const TextStyle(
+              color: Colors.white,
+              fontSize: 11,),
+            labelSmall: const TextStyle(
+              color: Colors.white,
+              fontSize: 11,
+          )
+        ),
+        navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+        home: const HomeScreen(customerId: 1),
     );
   }
 }
