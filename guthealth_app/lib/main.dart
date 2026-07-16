@@ -132,6 +132,7 @@ class MyApp extends StatelessWidget {
               fontSize: 11,
           )
         ),
+      ),
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         home: const HomeScreen(customerId: 1),
