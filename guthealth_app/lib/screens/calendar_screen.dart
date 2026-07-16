@@ -75,11 +75,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
       //emotion show on page
       final mood = moodForDay(_selectedDay);
       return Scaffold(
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         // top navigation bar
         appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: const Color(0xFF1B9FAE),
+            //centerTitle: true,
+            //backgroundColor: const Color(0xFF1B9FAE),
             // profile button
             leading: IconButton(
               icon: const Icon(Icons.person),
@@ -112,7 +112,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 // Calendar Widget
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                   color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
@@ -157,7 +157,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    headerStyle: const HeaderStyle(
+                    headerStyle: const HeaderStyle( // header for month.
                       formatButtonVisible: false,
                       titleCentered: true,
                       titleTextStyle: TextStyle(
@@ -172,16 +172,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 const SizedBox(height: 15),
 
                 Center(
-                  child: const Text(
+                  child: Text(
                     'Mood',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-
-                    ),
-                  ),
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontFamily: 'Poppins')
+                  )
                 ),
 
                 const SizedBox(height: 15),
@@ -248,24 +242,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         // Bottom navigation bar
         bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Color(0xFF1B9FAE),
-          ),
           child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _handleBottomNavigation,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: const Color(0xFF1B9FAE),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withValues(alpha: 0.7),
-
-            selectedLabelStyle: const TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w600,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontFamily: 'Poppins',
-            ),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),

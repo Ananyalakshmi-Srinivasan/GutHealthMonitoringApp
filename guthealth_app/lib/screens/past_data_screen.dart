@@ -22,7 +22,7 @@ class _PastDataScreenState extends State<PastDataScreen> {
   List<FlSpot> chartData = [];
   List<String> xLabels = [];
 
-  final String baseUrl = 'http://ec2-51-21-76-143.eu-north-1.compute.amazonaws.com:8080';
+  final String baseUrl = 'http://10.0.0.2:8080';
 
   final List<Map<String, String>> symptoms = const [
     {'label': 'Loose stool', 'name': 'loose_stool'},

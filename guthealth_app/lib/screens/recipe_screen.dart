@@ -14,7 +14,7 @@ class RecipesScreen extends StatefulWidget {
 class _RecipesScreenState extends State<RecipesScreen> {
 
   Future<void> _openPdf(String fileName) async {
-    final Uri url = Uri.parse("http://ec2-51-21-76-143.eu-north-1.compute.amazonaws.com:8080/docs/$fileName");
+    final Uri url = Uri.parse("http://10.0.0.2:8080/docs/$fileName");
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not open PDF');

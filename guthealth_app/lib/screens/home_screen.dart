@@ -90,8 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
       //backgroundColor: Colors.white, removing as establishing theme in one place to ensure consistency
       // top navigation bar
       appBar: AppBar(
-        //centerTitle: true,
-        //backgroundColor: const Color(0xFF1B9FAE),
         // profile button
         leading: IconButton(
           icon: const Icon(Icons.person),
@@ -121,13 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 35),
 
             // Welcome text
-            const Text(
-              "Welcome user",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF1B9FAE),
-              ),
+             Text(
+              "Welcome",
+              style: Theme.of(context).textTheme.displayLarge!.copyWith(),
             ),
 
             const SizedBox(height: 50),
@@ -153,16 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: BoxShape.circle,
                       color: Color(0xFFE0868D),
                     ),
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Log Symptoms",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          // uses the text theme defined in main.dart
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                      color: Colors.white),
                         ),
                       ],
                     ),
@@ -209,23 +201,12 @@ class _HomeScreenState extends State<HomeScreen> {
       // Bottom navigation bar
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
-          color: Color(0xFF1B9FAE),
+          // color: Color(0xFF1B9FAE),
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: _handleBottomNavigation,
           type: BottomNavigationBarType.fixed,
-          //backgroundColor: const Color(0xFF1B9FAE),
-          //selectedItemColor: Colors.white,
-          //unselectedItemColor: Colors.white.withValues(alpha: 0.7),
-
-          selectedLabelStyle: const TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: 'Poppins',
-          ),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

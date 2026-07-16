@@ -43,13 +43,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Ferrocalm app',
       themeMode: ThemeMode.system,
+
+      // two themes -- this helps reduce repetition in individual pages --> as you can refer to the default theme config here.
+      // further reduce repetition : there's a lot of similarities between the two themes e.g. font family, text theme sizes etc.
+      // only colour is different so find a way to reduce this excessive repeat.
+
       theme: ThemeData(
           fontFamily: 'Poppins',
           brightness: Brightness.light,
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: AppBarTheme(backgroundColor: const Color(0xFF1B9FAE),
                                    centerTitle: true,),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(0xFF1B9FAE),
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                                                                backgroundColor: const Color(0xFF1B9FAE),
                                                                 selectedItemColor: Colors.white,
                                                                 unselectedItemColor: Colors.white.withValues(alpha: 0.7),
                                                                 selectedLabelStyle: const TextStyle(
@@ -63,7 +69,6 @@ class MyApp extends StatelessWidget {
                       displayLarge: const TextStyle(
                       color: Color(0xFF1B9FAE),
                       fontSize: 50,
-                      fontFamily: 'Poppins' ,
                       fontWeight: FontWeight.bold,
                       ),
                       titleLarge: const TextStyle(
@@ -85,19 +90,17 @@ class MyApp extends StatelessWidget {
                     )
 
           ),
-
-
       ),
 
       darkTheme: ThemeData(
           fontFamily: 'Poppins',
           brightness: Brightness.dark,
-          primaryColor: Color(0xFF35EBFF),
           scaffoldBackgroundColor: const Color(0xFF191919),
           appBarTheme: AppBarTheme(backgroundColor: const Color(
               0xFF090808),
             centerTitle: true,),
-          bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(
+          bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: const Color(
               0xFF090808),
               selectedItemColor: const Color(0xFFE0868D), //const Color(0xFFE0868D),
               unselectedItemColor: Colors.white.withValues(alpha: 0.7),
@@ -133,6 +136,9 @@ class MyApp extends StatelessWidget {
           )
         ),
       ),
+
+        // add customisation further customisation like colour blind themes etc.
+
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         home: const HomeScreen(customerId: 1),
