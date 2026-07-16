@@ -51,8 +51,43 @@ class MyApp extends StatelessWidget {
                                    centerTitle: true,),
           bottomNavigationBarTheme: BottomNavigationBarThemeData(backgroundColor: const Color(0xFF1B9FAE),
                                                                 selectedItemColor: Colors.white,
-                                                                unselectedItemColor: Colors.white.withValues(alpha: 0.7))
-        ),
+                                                                unselectedItemColor: Colors.white.withValues(alpha: 0.7),
+                                                                selectedLabelStyle: const TextStyle(
+                                                                  fontFamily: 'Poppins',
+                                                                  fontWeight: FontWeight.w600,
+                                                                ),
+                                                                unselectedLabelStyle: const TextStyle(
+                                                                  fontFamily: 'Poppins',
+                                                                )),
+          textTheme: TextTheme(
+                      displayLarge: const TextStyle(
+                      color: Color(0xFF1B9FAE),
+                      fontSize: 50,
+                      fontFamily: 'Poppins' ,
+                      fontWeight: FontWeight.bold,
+                      ),
+                      titleLarge: const TextStyle(
+                      color: Color(0xFF1B9FAE),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      ),
+                      bodyLarge: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      ),
+                      bodySmall: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                      ),
+                      labelSmall: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 11,
+                    )
+
+          ),
+
+
+      ),
 
       darkTheme: ThemeData(
           fontFamily: 'Poppins',
