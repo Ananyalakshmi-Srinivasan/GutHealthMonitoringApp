@@ -26,7 +26,7 @@ class Emotion {//define a class named emotion
 
 
 List<Emotion> allEmotions = [
-  Emotion(emoji: '😄', label: 'Happy', id: '1'),
+  Emotion(emoji: '😄', label: 'Happy' , id: '1'),
   Emotion(emoji: '😁', label: 'Excited', id: '2'),
   Emotion(emoji: '🤩', label: 'Energetic', id: '3'),
   Emotion(emoji: '😊', label: 'Content', id: '4'),
@@ -49,7 +49,6 @@ class EmotionSearchPage extends StatefulWidget {//define a state page
   @override
   State<EmotionSearchPage> createState() => _EmotionSearchPageState();
 }
-
 
 class _EmotionSearchPageState extends State<EmotionSearchPage> {
   int _currentIndex = 0;
@@ -182,9 +181,9 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        //color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.black12),
+        border: Border.all(color: Color(0xFFE0868D)),
       ),
       child: TextField(
         controller: _journalController,
@@ -200,7 +199,6 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xFFF5F5F5),
         body: SafeArea(//avoid heading
           child: Column(
             children: [
@@ -237,7 +235,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
                     ),
                     child: Text(
                       'Continue',
-                      style: TextStyle(fontSize: 19, fontFamily: 'Poppins',fontWeight: FontWeight.w600),
+                      style:  Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white,fontWeight:FontWeight.w600),
                     ),
                   ),
 
@@ -249,24 +247,11 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
         ),
 
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF1B9FAE),
-        ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: _handleBottomNavigation,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color(0xFF1B9FAE),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withValues(alpha: 0.7),
 
-          selectedLabelStyle: const TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: 'Poppins',
-          ),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -286,16 +271,15 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
   Widget _buildSearchBar() {
     return Container(
       margin: EdgeInsets.all(16),
-      decoration: BoxDecoration(//white round corner+black margin
-        color: Colors.white,
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: Colors.black, width: 2),
+        border: Border.all(color: Color(0xFFE0868D), width: 2),
       ),
       child: TextField(//fix enter controller
         controller: _searchController,
         decoration: InputDecoration(
           hintText: '🔍   Search Moods',
-          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 18),
+          hintStyle: Theme.of(context).textTheme.bodyMedium,
           border: InputBorder.none,
           contentPadding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           // delete button
@@ -328,11 +312,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Text(
               title,
-              style: TextStyle(
-                color: Colors.grey[500],
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           SizedBox(height: 8),
@@ -372,7 +352,6 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
       child: Container(
         width: 56,
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
           border: isSelected
               ? Border.all(color: Color(0xFFE8B4BC), width: 2)
@@ -397,7 +376,8 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
           padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             title,
-            style: TextStyle(color: Colors.grey[400], fontSize: 16),
+            style: Theme.of(context).textTheme.bodyMedium!
+            //TextStyle(color: Colors.grey[400], fontSize: 16),
           ),
         ),
         SizedBox(height: 8),
@@ -436,10 +416,11 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
           }
         });
       },
+      // all moods emoji boards
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          // colour when you select a mood.
           border: isSelected
               ? Border.all(color: Color(0xFFE8B4BC), width: 3)
               : null,
@@ -450,12 +431,14 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [
+            children: [ // selects each emoji and draws a box
               Text(emotion.emoji, style: TextStyle(fontSize: 32)),
               SizedBox(height: 4),
+
+              // labels each emoji  on the page. 
               Text(
                 emotion.label,
-                style: TextStyle(fontSize: 12),
+                style:  Theme.of(context).textTheme.bodySmall,
                 textAlign: TextAlign.center,
               ),
             ],
