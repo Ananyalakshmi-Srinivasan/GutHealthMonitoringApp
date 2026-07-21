@@ -259,7 +259,8 @@ class SurveyScreenState extends State<SurveyScreen> {
 
           //Next question button
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 300), // this defines the internal space surrounding the rectangle that contains the button.
+            //giving most padding from the bottom to move the button up
             child: SizedBox(
               height: 43.0,
               width: double.infinity,
