@@ -75,11 +75,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       //emotion show on page
       final mood = moodForDay(_selectedDay);
       return Scaffold(
-        //backgroundColor: Colors.white,
         // top navigation bar
         appBar: AppBar(
-            //centerTitle: true,
-            //backgroundColor: const Color(0xFF1B9FAE),
             // profile button
             leading: IconButton(
               icon: const Icon(Icons.person),
@@ -169,17 +166,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
 
                 ),
-                const SizedBox(height: 15),
 
+                const SizedBox(height: 45), // Mood text box
                 Center(
                   child: Text(
                     'Mood',
-                      style: Theme.of(context).textTheme.displaySmall!.copyWith(fontFamily: 'Poppins')
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w800, color:Colors.white )
                   )
                 ),
 
-                const SizedBox(height: 15),
-
+                const SizedBox(height: 5), // Mood emoji box
                 Center(
                   child: Text(
                     mood.emoji,
@@ -187,7 +183,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     style: const TextStyle(fontSize: 50),
                   ),
                 ),
-                const SizedBox(height: 5),
+
+                const SizedBox(height: 5), // Buttons box
 
                 //back to mood log
                 SizedBox(
@@ -200,15 +197,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                     ),
                     onPressed: _handleJournal,
-                    child: const Text(
+                    child: Text(
                       'View Journal',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith()
+
+                  ),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -224,14 +217,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       'View Symptom Log',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith()
+                    ,
                     ),
                   ),
                 ),

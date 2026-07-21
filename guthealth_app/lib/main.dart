@@ -59,30 +59,33 @@ class MyApp extends StatelessWidget {
                                                                 selectedItemColor: Colors.white,
                                                                 unselectedItemColor: Colors.white.withValues(alpha: 0.7),
                                                                 selectedLabelStyle: const TextStyle(
-                                                                  fontFamily: 'Poppins',
+                                                                  //fontFamily: 'Poppins',
                                                                   fontWeight: FontWeight.w600,
-                                                                ),
-                                                                unselectedLabelStyle: const TextStyle(
-                                                                  fontFamily: 'Poppins',
                                                                 )),
+
           textTheme: TextTheme(
                       displayLarge: const TextStyle(
                       color: Color(0xFF1B9FAE),
                       fontSize: 50,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       ),
                       titleLarge: const TextStyle(
                       color: Color(0xFF1B9FAE),
                       fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600,
                       ),
                       bodyLarge: const TextStyle(
                       color: Colors.black,
                       fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      ),
+                      bodyMedium: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
                       ),
                       bodySmall: const TextStyle(
                       color: Colors.black,
-                      fontSize: 15,
+                      fontSize: 12,
                       ),
                       labelSmall: const TextStyle(
                       color: Colors.black,
@@ -112,28 +115,34 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Poppins',
               )),
           textTheme: TextTheme(
-            displayLarge: const TextStyle(
-              color: Color(0xFFE0868D),
-              fontSize: 50,
-              fontWeight: FontWeight.w500,
+                displayLarge: const TextStyle(
+                  color: Color(0xFFE0868D),
+                  fontSize: 50,
+                  fontWeight: FontWeight.w600,
+                ),
+                titleLarge: const TextStyle(
+                  color: Color(0xFFE0868D),
+                  fontSize: 30,
+                  fontWeight: FontWeight.w600,
+                ),
+                bodyLarge: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+                bodyMedium: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                ),
 
-            ),
-            titleLarge: const TextStyle(
-              color: Color(0xFFE0868D),
-              fontSize: 30,
-              fontWeight: FontWeight.w500,
-            ),
-            bodyLarge: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-            bodySmall: const TextStyle(
-              color: Colors.white,
-              fontSize: 11,),
-            labelSmall: const TextStyle(
-              color: Colors.white,
-              fontSize: 11,
-          )
+                bodySmall: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+                labelSmall: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                )
         ),
       ),
 

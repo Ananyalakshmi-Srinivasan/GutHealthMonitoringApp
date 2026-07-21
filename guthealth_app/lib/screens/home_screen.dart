@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Welcome text
              Text(
               "Welcome",
-              style: Theme.of(context).textTheme.displayLarge!.copyWith(),
+              style: Theme.of(context).textTheme.displayLarge,
             ),
 
             const SizedBox(height: 50),
