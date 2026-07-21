@@ -62,7 +62,6 @@ class MyApp extends StatelessWidget {
                                                                   //fontFamily: 'Poppins',
                                                                   fontWeight: FontWeight.w600,
                                                                 )),
-
           textTheme: TextTheme(
                       displayLarge: const TextStyle(
                       color: Color(0xFF1B9FAE),

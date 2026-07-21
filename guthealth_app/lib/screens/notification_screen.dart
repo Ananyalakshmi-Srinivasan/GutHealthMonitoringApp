@@ -78,37 +78,29 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF1B9FAE),
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
+        title:  Text(
           'Notifications - mock page',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-          ),
+           style: Theme.of(context).textTheme.bodyLarge
         ),
         actions: [
           TextButton(
             onPressed: markAllAsRead,
-            child: const Text(
+            child:  Text(
               'Mark all read',
-              style: TextStyle(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyLarge
             ),
           ),
         ],
       ),
       body: notifications.isEmpty
-          ? const Center(
+          ?  Center(
         child: Text(
           'No notifications yet',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
-          ),
-        ),
+          style: Theme.of(context).textTheme.bodyMedium
+      ),
       )
           : ListView.separated(
         padding: const EdgeInsets.all(16),
@@ -124,8 +116,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
                 color: item.isRead
-                    ? Colors.white
-                    : const Color(0xFFEAF7F9),
+                    ? Theme.of(context).scaffoldBackgroundColor
+                    : null,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
                   color: const Color(0xFF1B9FAE).withValues(alpha: 0.15),
@@ -159,11 +151,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             Expanded(
                               child: Text(
                                 item.title,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF1B9FAE),
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight:FontWeight.w600, fontSize: 16),
                               ),
                             ),
                             if (!item.isRead)
@@ -180,19 +168,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         const SizedBox(height: 6),
                         Text(
                           item.message,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
-                            height: 1.4,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium
                         ),
                         const SizedBox(height: 8),
                         Text(
                           item.time,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(color: Colors.grey),
                         ),
                       ],
                     ),

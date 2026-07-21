@@ -435,7 +435,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
               Text(emotion.emoji, style: TextStyle(fontSize: 32)),
               SizedBox(height: 4),
 
-              // labels each emoji  on the page. 
+              // labels each emoji  on the page.
               Text(
                 emotion.label,
                 style:  Theme.of(context).textTheme.bodySmall,
