@@ -107,7 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: LayoutBuilder(
@@ -120,11 +119,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
                       borderRadius: BorderRadius.circular(30),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color.fromARGB(255, 203, 203, 203),
+                          color:Theme.of(context).scaffoldBackgroundColor,
                           blurRadius: 20,
                           offset: const Offset(0, 4),
                         ),
@@ -158,13 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 20),
 
                             // Email
-                            const Text(
+                            Text(
                               'Email',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF2C2C2C),
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize:18, fontWeight: FontWeight.w600)
                             ),
                             const SizedBox(height: 10),
                             TextFormField(
@@ -172,9 +166,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               keyboardType: TextInputType.emailAddress,
                               decoration: InputDecoration(
                                 hintText: 'your.email@example.com',
-                                hintStyle: TextStyle(color: Colors.grey[400]),
+                                hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 16, fontWeight:FontWeight.w600,color: Colors.grey),
                                 filled: true,
-                                fillColor: const Color(0xFFF8F9FA),
+                                //fillColor: const Color(0xFFF8F9FA),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide(
@@ -215,13 +209,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(height: 20),
 
                             // Password
-                            const Text(
+                            Text(
                               'Password',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF2C2C2C),
-                              ),
+                                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 18, fontWeight: FontWeight.w600)
                             ),
 
                             const SizedBox(height: 10),
@@ -230,9 +220,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               obscureText: _obscurePassword,
                               decoration: InputDecoration(
                                 hintText: '••••••••',
-                                hintStyle: TextStyle(color: Colors.grey[400]),
+                                hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.grey),
                                 filled: true,
-                                fillColor: const Color(0xFFF8F9FA),
+                                //fillColor: const Color(0xFFF8F9FA),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide: BorderSide(
@@ -298,12 +288,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 elevation: 0,
                               ),
-                              child: const Text(
+                              child: Text(
                                 'Sign In',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
+                                style:Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white, fontWeight: FontWeight.w700)
                               ),
                             ),
 
@@ -333,10 +320,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 children: [
                                   Text(
                                     "Don't have an account? ",
-                                    style: TextStyle(
-                                      color: Colors.grey[700],
-                                      fontSize: 15,
-                                    ),
+                                    style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize:15)
                                   ),
                                   TextButton(
                                     onPressed: _handleSignUp,
@@ -344,12 +328,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       padding: EdgeInsets.zero,
                                       minimumSize: const Size(0, 0),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Sign Up',
-                                      style: TextStyle(
-                                        color: Color(0xFF2C2C2C),
+                                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
                                         fontSize: 15,
-                                        fontWeight: FontWeight.w700,
+                                        fontWeight: FontWeight.w600,
                                         decoration: TextDecoration.underline,
                                       ),
                                     ),
