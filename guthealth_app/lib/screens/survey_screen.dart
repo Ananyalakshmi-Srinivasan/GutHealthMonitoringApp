@@ -230,7 +230,7 @@ class SurveyScreenState extends State<SurveyScreen> {
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 300), // this defines the internal space surrounding the rectangle that contains the button.
             //giving most padding from the bottom to move the button up
             child: SizedBox(
-              height: 43.0,
+              height: 50.0,
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -267,7 +267,7 @@ class SurveyScreenState extends State<SurveyScreen> {
                 },
                 child:  Text(
                   'Next',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 17,fontWeight:FontWeight.w700),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ),
