@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-
-import 'screens/login_screen.dart';
+import 'package:guthealth_app/utils/theme/theme.dart';
+import 'screens/home_screen.dart';
 import 'firebase_options.dart';
 import 'services/fcm_service.dart';
 import 'dart:async';
@@ -47,6 +47,8 @@ class MyApp extends StatelessWidget {
       // two themes -- this helps reduce repetition in individual pages --> as you can refer to the default theme config here.
       // further reduce repetition : there's a lot of similarities between the two themes e.g. font family, text theme sizes etc.
       // only colour is different so find a way to reduce this excessive repeat.
+
+      // theme: TAppTheme.lightTheme
 
       theme: ThemeData(
           fontFamily: 'Poppins',
@@ -93,6 +95,8 @@ class MyApp extends StatelessWidget {
 
           ),
       ),
+
+      // darkTheme: TAppTheme.darkTheme
 
       darkTheme: ThemeData(
           fontFamily: 'Poppins',
@@ -149,7 +153,7 @@ class MyApp extends StatelessWidget {
 
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        home: const LoginScreen(),
+        home: const HomeScreen(customerId : 1),
     );
   }
 }
