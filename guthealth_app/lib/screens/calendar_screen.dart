@@ -75,11 +75,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
       //emotion show on page
       final mood = moodForDay(_selectedDay);
       return Scaffold(
-        backgroundColor: Colors.white,
         // top navigation bar
         appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: const Color(0xFF1B9FAE),
             // profile button
             leading: IconButton(
               icon: const Icon(Icons.person),
@@ -112,7 +109,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 // Calendar Widget
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                   //color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
@@ -157,7 +154,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    headerStyle: const HeaderStyle(
+                    headerStyle: const HeaderStyle( // header for month.
                       formatButtonVisible: false,
                       titleCentered: true,
                       titleTextStyle: TextStyle(
@@ -169,23 +166,16 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   ),
 
                 ),
-                const SizedBox(height: 15),
 
+                const SizedBox(height: 45), // Mood text box
                 Center(
-                  child: const Text(
+                  child: Text(
                     'Mood',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-
-                    ),
-                  ),
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(fontWeight: FontWeight.w800, color:Colors.white )
+                  )
                 ),
 
-                const SizedBox(height: 15),
-
+                const SizedBox(height: 5), // Mood emoji box
                 Center(
                   child: Text(
                     mood.emoji,
@@ -193,7 +183,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     style: const TextStyle(fontSize: 50),
                   ),
                 ),
-                const SizedBox(height: 5),
+
+                const SizedBox(height: 5), // Buttons box
 
                 //back to mood log
                 SizedBox(
@@ -206,15 +197,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                     ),
                     onPressed: _handleJournal,
-                    child: const Text(
+                    child: Text(
                       'View Journal',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith()
+
+                  ),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -230,14 +217,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                     ),
                     onPressed: () {},
-                    child: const Text(
+                    child: Text(
                       'View Symptom Log',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith()
+                    ,
                     ),
                   ),
                 ),
@@ -248,24 +231,10 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
         // Bottom navigation bar
         bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Color(0xFF1B9FAE),
-          ),
           child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _handleBottomNavigation,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: const Color(0xFF1B9FAE),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withValues(alpha: 0.7),
-
-            selectedLabelStyle: const TextStyle(
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w600,
-            ),
-            unselectedLabelStyle: const TextStyle(
-              fontFamily: 'Poppins',
-            ),
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),

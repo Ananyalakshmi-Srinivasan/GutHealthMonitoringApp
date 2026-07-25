@@ -14,7 +14,7 @@ class RecipesScreen extends StatefulWidget {
 class _RecipesScreenState extends State<RecipesScreen> {
 
   Future<void> _openPdf(String fileName) async {
-    final Uri url = Uri.parse("http://ec2-51-21-76-143.eu-north-1.compute.amazonaws.com:8080/docs/$fileName");
+    final Uri url = Uri.parse("http://10.0.0.2:8080/docs/$fileName");
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not open PDF');
@@ -43,11 +43,11 @@ class _RecipesScreenState extends State<RecipesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
 
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: const Color(0xFF1B9FAE),
+        //backgroundColor: const Color(0xFF1B9FAE),
 
         leading: IconButton(
           icon: const Icon(Icons.person),
@@ -77,13 +77,9 @@ class _RecipesScreenState extends State<RecipesScreen> {
 
             const SizedBox(height: 35),
 
-            const Text(
+            Text(
               "Recipes",
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w500,
-                color: Color(0xFF1B9FAE),
-              ),
+               style: Theme.of(context).textTheme.titleLarge,
             ),
 
             const SizedBox(height: 35),
@@ -140,24 +136,9 @@ class _RecipesScreenState extends State<RecipesScreen> {
       ),
 
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Color(0xFF1B9FAE),
-        ),
         child: BottomNavigationBar(
           onTap: _handleBottomNavigation,
           type: BottomNavigationBarType.fixed,
-          backgroundColor: const Color(0xFF1B9FAE),
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white.withValues(alpha: 0.7),
-
-          selectedLabelStyle: const TextStyle(
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
-          ),
-
-          unselectedLabelStyle: const TextStyle(
-            fontFamily: 'Poppins',
-          ),
 
           items: const [
             BottomNavigationBarItem(

@@ -22,7 +22,7 @@ class _PastDataScreenState extends State<PastDataScreen> {
   List<FlSpot> chartData = [];
   List<String> xLabels = [];
 
-  final String baseUrl = 'http://ec2-51-21-76-143.eu-north-1.compute.amazonaws.com:8080';
+  final String baseUrl = 'http://10.0.0.2:8080';
 
   final List<Map<String, String>> symptoms = const [
     {'label': 'Loose stool', 'name': 'loose_stool'},
@@ -80,18 +80,12 @@ class _PastDataScreenState extends State<PastDataScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      //backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           'Past Data',
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white, fontSize: 23),
         ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1B9FAE),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.push(
@@ -113,13 +107,9 @@ class _PastDataScreenState extends State<PastDataScreen> {
             ),
             const SizedBox(height: 15),
             // Title
-            const Text(
+            Text(
               'Symptom history:',
-              style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 15),
@@ -146,11 +136,8 @@ class _PastDataScreenState extends State<PastDataScreen> {
                     value: symptom['name'],
                     child: Text(
                       symptom['label']!,
-                      style: const TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize:15),
                       ),
-                    ),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
@@ -189,10 +176,7 @@ class _PastDataScreenState extends State<PastDataScreen> {
                           getTitlesWidget: (value, meta) {
                             return Text(
                               value.toInt().toString(),
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Colors.black87,
-                              ),
+                              style: Theme.of(context).textTheme.bodySmall,
                             );
                           },
                         ),
@@ -211,10 +195,8 @@ class _PastDataScreenState extends State<PastDataScreen> {
                               angle: -0.5,
                               child: Text(
                                 xLabels[index],
-                                style: const TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black87,
-                                ),
+                                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                                  fontSize: 10),
                               ),
                             );
                           },
@@ -247,7 +229,7 @@ class _PastDataScreenState extends State<PastDataScreen> {
                           getDotPainter: (spot, percent, barData, index) {
                             return FlDotCirclePainter(
                               radius: 4,
-                              color: Colors.black87,
+                              color: const Color(0xFF1B9FAE),
                               strokeWidth: 2,
                               strokeColor: Colors.white,
                             );

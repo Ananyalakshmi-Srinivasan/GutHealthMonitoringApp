@@ -35,7 +35,7 @@ class SurveyScreenState extends State<SurveyScreen> {
   int get totalSteps => symptoms.length;
 
   Future<void> submitSurvey(Map<String, dynamic> formData) async {
-    final url = Uri.parse("http://ec2-51-21-76-143.eu-north-1.compute.amazonaws.com:8080/api/response/submit");
+    final url = Uri.parse("http://localhost:8080/api/response/submit");
       //submit used here because that's the url the springboot end is expecting the post request on!!
     final response = await http.post(
       url,
@@ -59,29 +59,18 @@ class SurveyScreenState extends State<SurveyScreen> {
           ),
           title: Text(
             symptomLabel,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF1B9FAE),
-            ),
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           content: Text(
             description,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Colors.black87,
-            ),
+            style: Theme.of(context).textTheme.bodySmall,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
+              child: Text(
                 'Got it',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFFE0868D),
-                ),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w600, color: Color(0xFFE0868D)),
               ),
             ),
           ],
@@ -95,18 +84,12 @@ class SurveyScreenState extends State<SurveyScreen> {
     final currentSymptom = symptoms[currentQuestionIndex];
     final currentName = currentSymptom['name']!;
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           'Ferrocalm Survey',
-          style: TextStyle(
-            fontSize: 23,
-            fontWeight: FontWeight.w700,
-            color: Color(0xFFFFFFFF),
-          ),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white, fontSize: 23),
         ),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF1B9FAE),
+        //centerTitle: true,
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -139,8 +122,8 @@ class SurveyScreenState extends State<SurveyScreen> {
                 Expanded(
                   child: LinearProgressIndicator(
                     value: currentStep / totalSteps,
-                    backgroundColor: Colors.grey[300],
-                    color: const Color(0xFF1B9FAE),
+                    //backgroundColor: Colors.grey[300],
+                    //color: const Color(0xFF1B9FAE),
                     minHeight: 6,
                   ),
                 ),
@@ -171,14 +154,10 @@ class SurveyScreenState extends State<SurveyScreen> {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: const [
+                        children:  [
                           Text(
                             'On a scale of 0 to 10, how would you rate the following symptoms over the last week?',
-                            style: TextStyle(
-                              fontSize: 15.7,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black87,
-                            ),
+                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight:FontWeight.w600),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -186,15 +165,12 @@ class SurveyScreenState extends State<SurveyScreen> {
                     ),
 
                     const SizedBox(height: 35),
-
+                    // symptom label --> loose stool etc.
                     Text(
                       currentSymptom['label'] ?? '',
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                      ),
                       textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 18, fontWeight:FontWeight.w600),
+
                     ),
                     const SizedBox(height: 20),
 
@@ -216,11 +192,8 @@ class SurveyScreenState extends State<SurveyScreen> {
                             ),
                             valueWidget: (value) => Text(
                               value,
-                              style: const TextStyle(
-                                color: Color(0xFFE0868D),
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Color(
+                                  0xFFE0868D), fontWeight: FontWeight.w600),
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -237,14 +210,9 @@ class SurveyScreenState extends State<SurveyScreen> {
                                 size: 18,
                                 color: Color(0xFF1B9FAE),
                               ),
-                              label: const Text(
+                              label: Text(
                                 'Symptom Description',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF1B9FAE),
-                                  decoration: TextDecoration.underline,
-                                ),
+                                style: Theme.of(context).textTheme.bodySmall!.copyWith(fontWeight:FontWeight.w600),
                               ),
                             ),
                           ),
@@ -259,9 +227,10 @@ class SurveyScreenState extends State<SurveyScreen> {
 
           //Next question button
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 300), // this defines the internal space surrounding the rectangle that contains the button.
+            //giving most padding from the bottom to move the button up
             child: SizedBox(
-              height: 43.0,
+              height: 50.0,
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -296,13 +265,9 @@ class SurveyScreenState extends State<SurveyScreen> {
                     );
                   }
                 },
-                child: const Text(
+                child:  Text(
                   'Next',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFFFFFFFF),
-                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
             ),
