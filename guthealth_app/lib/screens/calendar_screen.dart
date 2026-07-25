@@ -109,7 +109,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 // Calendar Widget
                 Container(
                   decoration: BoxDecoration(
-                   color: Colors.white,
+                   //color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
