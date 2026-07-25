@@ -35,7 +35,36 @@ class TTextTheme {
 
 
   );
-  static TextTheme darkTextTheme = TextTheme();
+  static TextTheme darkTextTheme = TextTheme(
+      displayLarge: const TextStyle().copyWith(
+        color: Color(0xFFE0868D),
+        fontSize: 50,
+        fontWeight: FontWeight.w600,
+      ),
+      titleLarge: const TextStyle().copyWith(
+        color: Color(0xFFE0868D),
+        fontSize: 30,
+        fontWeight: FontWeight.w600,
+      ),
+      bodyLarge: const TextStyle().copyWith(
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: FontWeight.w600,
+      ),
+      bodyMedium: const TextStyle().copyWith(
+        color: Colors.white,
+        fontSize: 15,
+      ),
+
+      bodySmall: const TextStyle().copyWith(
+        color: Colors.white,
+        fontSize: 12,
+      ),
+      labelSmall: const TextStyle().copyWith(
+        color: Colors.white,
+        fontSize: 11,
+      )
+  );
 
 
 

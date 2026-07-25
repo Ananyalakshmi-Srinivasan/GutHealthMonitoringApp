@@ -89,7 +89,7 @@ class SurveyScreenState extends State<SurveyScreen> {
           'Ferrocalm Survey',
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: Colors.white, fontSize: 23),
         ),
-        centerTitle: true,
+        //centerTitle: true,
         leading: Builder(
           builder: (context) {
             return IconButton(
