@@ -30,14 +30,18 @@ public class SurveyController {
         //this.dTController = dtController;
     }
 
-
     // Flutter send POST /api/response/submit
     @PostMapping("/submit")
     public SurveyResponse saveResponse(@RequestBody SurveyResponse response) {
         LocalDate now = LocalDate.now();
-        Long customerID = 1L;
+        Long customerID = 1L;  // 1 is the dummy customerid for now
         Customer customer = customerService.getCustomerByID(customerID);
-        return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+
+        if (surveyService.getResponseDate(response) == now) {
+            return surveyService.updateResponse(surveyService.getResponseDate(response),response);
+        } else {
+            return surveyService.createResponse(response, now, customer);
+        }
     }
 
     @GetMapping("/export")
