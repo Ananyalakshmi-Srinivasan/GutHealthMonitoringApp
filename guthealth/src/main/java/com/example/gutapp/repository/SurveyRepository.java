@@ -3,16 +3,20 @@ package com.example.gutapp.repository;
 import com.example.gutapp.models.SurveyResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param; // 必须导入这个
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import java.time.LocalDate;
+
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SurveyRepository extends JpaRepository<SurveyResponse, Long> {
 
     //can see all answer form this id
     List<SurveyResponse> findBySurveyID(Long surveyID);
+    List<SurveyResponse> findByDateCompleted(LocalDate dateCompleted);
 
     //Native SQL query specifically designed to provide data for front-end line charts
     //the return type is List<Object[]>, because only extracted two columns of data.

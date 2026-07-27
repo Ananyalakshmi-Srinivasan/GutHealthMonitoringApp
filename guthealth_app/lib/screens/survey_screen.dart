@@ -35,7 +35,7 @@ class SurveyScreenState extends State<SurveyScreen> {
   int get totalSteps => symptoms.length;
 
   Future<void> submitSurvey(Map<String, dynamic> formData) async {
-    final url = Uri.parse("http://localhost:8080/api/response/submit");
+    final url = Uri.parse("http://10.0.0.2:8080/api/response/submit");
       //submit used here because that's the url the springboot end is expecting the post request on!!
     final response = await http.post(
       url,
@@ -122,8 +122,6 @@ class SurveyScreenState extends State<SurveyScreen> {
                 Expanded(
                   child: LinearProgressIndicator(
                     value: currentStep / totalSteps,
-                    //backgroundColor: Colors.grey[300],
-                    //color: const Color(0xFF1B9FAE),
                     minHeight: 6,
                   ),
                 ),

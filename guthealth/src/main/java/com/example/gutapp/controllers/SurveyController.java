@@ -3,6 +3,8 @@ package com.example.gutapp.controllers;
 import com.example.gutapp.dto.SymptomGraphData;
 import com.example.gutapp.models.*;
 import com.example.gutapp.service.*;
+import com.example.gutapp.repository.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +22,15 @@ import java.util.TreeSet;
 @RequestMapping("/api/response")
 public class SurveyController {
 
+    private final SurveyRepository surveyRepository;
     private final SurveyService surveyService;
     private final CustomerService customerService;
     // private final DateTimeController dTController;
 
-    public SurveyController(SurveyService surveyService, CustomerService customerService) {
+    public SurveyController(SurveyRepository surveyRepository, SurveyService surveyService, CustomerService customerService) {
+        this.surveyRepository = surveyRepository;
         this.surveyService = surveyService;
         this.customerService = customerService;
-        //this.dTController = dtController;
     }
 
 
@@ -37,8 +40,13 @@ public class SurveyController {
         LocalDate now = LocalDate.now();
         Long customerID = 1L;
         Customer customer = customerService.getCustomerByID(customerID);
-        return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
-    }
+
+        //if (surveyService.getResponseDate(response) == now) {
+        //    return surveyService.updateResponse(now, response.getAttributes(), customer, response);
+        //} else {
+            return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+          //  }
+        }
 
     @GetMapping("/export")
     public void exportSurveysToCSV(HttpServletResponse response) throws IOException {

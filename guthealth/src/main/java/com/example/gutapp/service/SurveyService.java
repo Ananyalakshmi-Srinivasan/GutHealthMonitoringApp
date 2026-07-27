@@ -7,6 +7,12 @@ import com.example.gutapp.repository.*;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode; // allows jsonb
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +25,37 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    // get responses from Survey Response entity
+    // get ID components of a response
+    public Long getResponseID(SurveyResponse response) {
+        return response.getSurveyID();
+    }
+    public LocalDate getResponseDate(SurveyResponse response) {
+        return response.getDateCompleted();
+    }
+
+    // get responses from Survey Response entity using ID
     public List<SurveyResponse> getResponseByID(Long ID) {
        return surveyRepository.findBySurveyID(ID);
     }
 
+    public List<SurveyResponse> getResponseByDate(LocalDate date) {
+        return surveyRepository.findByDateCompleted(date);
+    }
+
     public List<SurveyResponse> getAllResponses() {
+        return surveyRepository.findAll();
+    }
+    public List<SurveyResponse> getAllResponsesForCustomer(Customer customer) {
+        List<SurveyResponse> responses = new ArrayList<SurveyResponse>();
+
+        List<SurveyResponse> allResponses = getAllResponses();
+
+        for (SurveyResponse response : allResponses){
+            if (response.getCustomerID() == customer)
+            {
+                responses.add(response);
+            }
+        }
         return surveyRepository.findAll();
     }
 
@@ -37,18 +68,21 @@ public class SurveyService {
         return surveyRepository.save(response);
     }
 
-    //update function to allow customers to update previous responses to surveys
-    // (no implementation in front end yet but this can be extended in the future)
-    public SurveyResponse updateResponse(Long id, SurveyResponse responseDetails) {
-        Optional<SurveyResponse> response = surveyRepository.findById(id);
-        //save response
-        if (response.isPresent()) {
-            SurveyResponse existingResponse = response.get();
-            existingResponse.setAttributes(responseDetails.getAttributes());
-            return surveyRepository.save(existingResponse);
-        }
-        return null;
+    // update function to allow customers to update previous responses to surveys
+
+    @Query(value = "UPDATE survey_response SET attributes = :symptomDetails WHERE date_completed = :date IN (SELECT date_completed FROM survey_response WHERE customer = :customer)", nativeQuery = true)
+    public SurveyResponse updateResponse(@Param("date")LocalDate date, @Param("symptomDetails")JsonNode symptomDetails, @Param("customer")Customer customer, SurveyResponse response) {
+        return response;
     }
+    boolean responseExists(LocalDate date) {
+
+        if (getResponseByDate(date) != null) {
+            return true;
+        } else  {
+            return false;
+        }
+    }
+
 
     // delete Survey Responses
     public void deleteSurveyResponse(Long id) {
