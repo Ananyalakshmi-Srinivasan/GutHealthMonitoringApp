@@ -15,8 +15,10 @@ import java.util.Optional;
 public interface SurveyRepository extends JpaRepository<SurveyResponse, Long> {
 
     //can see all answer form this id
-    List<SurveyResponse> findBySurveyID(Long surveyID);
+    //List<SurveyResponse> findBySurveyID(Long surveyID);
     List<SurveyResponse> findByDateCompleted(LocalDate dateCompleted);
+
+    void deleteByDateCompleted(LocalDate dateCompleted);
 
     //Native SQL query specifically designed to provide data for front-end line charts
     //the return type is List<Object[]>, because only extracted two columns of data.
@@ -26,4 +28,5 @@ public interface SurveyRepository extends JpaRepository<SurveyResponse, Long> {
             "ORDER BY date_completed ASC",
             nativeQuery = true)
     List<Object[]> findSymptomGraphData(@Param("customerId") Long customerId, @Param("symptomName") String symptomName);
+
 }
