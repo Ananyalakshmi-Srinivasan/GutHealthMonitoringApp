@@ -71,21 +71,23 @@ class SurveyServiceTests {
     }
 
     @Test
-    void testGetResponseByID() {
+    void testGetResponseByDate() {
 
         SurveyResponse response = new SurveyResponse();
-        response.setSurveyID(1L);
+        LocalDate now = LocalDate.now();
+
+        response.setDateCompleted(now);
 
         //Simulates a new entry to the response table
         //return a list containing response
-        when(surveyRepository.findBySurveyID(1L)).thenReturn(List.of(response));
+        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(response));
         //call service
-        List<SurveyResponse> responses = surveyService.getResponseByID(1L);
+        List<SurveyResponse> responses = surveyService.getResponseByDate(now);
 
         //check the size of the list
         assertEquals(1, responses.size());
         //Verify whether this method has been called before
-        verify(surveyRepository).findBySurveyID(1L);
+        verify(surveyRepository).findByDateCompleted(now);
     }
 
 //    @Test
@@ -146,10 +148,11 @@ class SurveyServiceTests {
     @Test
     //check the deleteSurveyResponse() method
     void testDeleteSurveyResponse() {
+        LocalDate now = LocalDate.now();
         //Check whether deleteById(1L) was actually called
-        surveyService.deleteSurveyResponse(1L);
+        surveyService.deleteSurveyResponse(now);
         //Check whether the mock object's method has been executed
-        verify(surveyRepository).deleteById(1L);
+        verify(surveyRepository).deleteByDateCompleted(now);
     }
 
     @Test
