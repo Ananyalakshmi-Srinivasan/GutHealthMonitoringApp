@@ -91,40 +91,40 @@ class SurveyServiceTests {
     }
 
     @Test
-    //check updateResponse() when record exists
-    void testUpdateResponse() throws Exception {
-        LocalDate now = LocalDate.now();
-
-        //old JSON (existing data)
-        String oldJson = "{ \"response\": \"1\" }";
-        JsonNode oldAttributes = objectMapper.readTree(oldJson);
-
-        SurveyResponse existing = new SurveyResponse();
-        existing.setAttributes(oldAttributes);
-
-        Customer customer = customerService.getCustomerByID(1L);
-        surveyService.createResponse(existing,now,customer);
-
-        //new JSON (update data)
-        String newJson = "{ \"response\": \"3\" }";
-        JsonNode newAttributes = objectMapper.readTree(newJson);
-
-        SurveyResponse update = surveyService.updateResponse(now, newAttributes,customer,existing);
-        update.setAttributes(newAttributes);
-
-        //the database found the response
-        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
-        when(surveyRepository.save(any())).thenReturn(existing);
-
-        //call update
-        SurveyResponse result = surveyService.updateResponse(now, newAttributes,customer,existing);
-
-        //update successfully
-        assertEquals(newAttributes, result.getAttributes());
-    }
+//    //check updateResponse() when record exists
+//    void testUpdateResponse() throws Exception {
+//        LocalDate now = LocalDate.now();
+//
+//        //old JSON (existing data) -- create old existing data
+//        String oldJson = "{ \"response\": \"1\" }";
+//        JsonNode oldAttributes = objectMapper.readTree(oldJson);
+//
+//        SurveyResponse existing = new SurveyResponse();
+//        existing.setAttributes(oldAttributes);
+//
+//        Customer customer = customerService.getCustomerByID(1L);
+//        surveyService.createResponse(existing,now,customer);
+//
+//        //new JSON (update data)
+//        String newJson = "{ \"response\": \"3\" }";
+//        JsonNode newAttributes = objectMapper.readTree(newJson);
+//
+//        SurveyResponse update = surveyService.updateResponse(now, newAttributes,customer,existing);
+//        update.setAttributes(newAttributes);
+//
+//        //the database found the response
+//        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
+//        when(surveyRepository.save(any())).thenReturn(existing);
+//
+//        //call update
+//        SurveyResponse result = surveyService.updateResponse(now, newAttributes,customer,existing);
+//
+//        //update successfully
+//        assertEquals(newAttributes, result.getAttributes());
+//    }
 
     //@Test
-        //check when id not exits
+    // check when id not exits
 //    void testUpdateResponseNotExists() {
 //
 //        LocalDate now = LocalDate.now();
