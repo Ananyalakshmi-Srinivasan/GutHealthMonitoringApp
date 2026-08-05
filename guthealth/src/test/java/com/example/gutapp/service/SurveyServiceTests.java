@@ -90,22 +90,26 @@ class SurveyServiceTests {
         verify(surveyRepository).findByDateCompleted(now);
     }
 
-//    @Test
-//    //check updateResponse() when record exists
-//    void testUpdateResponse() throws Exception {
-//
-//        //old JSON (existing data)
-//        String oldJson = "{ \"response\": \"1\" }";
-//        JsonNode oldAttributes = objectMapper.readTree(oldJson);
-//
-//        SurveyResponse existing = new SurveyResponse();
-//        existing.setAttributes(oldAttributes);
-//
-//        //new JSON (update data)
-//        String newJson = "{ \"response\": \"3\" }";
-//        JsonNode newAttributes = objectMapper.readTree(newJson);
-//
-//        SurveyResponse update = new SurveyResponse();
+    @Test
+    //check updateResponse() when record exists
+    void testUpdateResponse() throws Exception {
+        LocalDate now = LocalDate.now();
+
+        //old JSON (existing data)
+        String oldJson = "{ \"response\": \"1\" }";
+        JsonNode oldAttributes = objectMapper.readTree(oldJson);
+
+        SurveyResponse existing = new SurveyResponse();
+        existing.setAttributes(oldAttributes);
+
+        Customer customer = customerService.getCustomerByID(1L);
+        surveyService.createResponse(existing,now,customer);
+
+        //new JSON (update data)
+        String newJson = "{ \"response\": \"3\" }";
+        JsonNode newAttributes = objectMapper.readTree(newJson);
+
+        SurveyResponse update = surveyService.updateResponse(now, newAttributes,customer,existing);
 //        update.setAttributes(newAttributes);
 //
 //        //the database found the response
