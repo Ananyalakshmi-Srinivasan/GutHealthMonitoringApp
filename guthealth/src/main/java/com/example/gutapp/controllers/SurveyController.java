@@ -41,9 +41,11 @@ public class SurveyController {
         Long customerID = 1L;
         Customer customer = customerService.getCustomerByID(customerID);
 
-        //if (surveyService.getResponseDate(response) == now) {
-        //    return surveyService.updateResponse(now, response.getAttributes(), customer, response);
-        //} else {
+        if (surveyService.getResponseDate(response) == now) {
+            JsonNode update = response.getAttributes();
+            SurveyResponse existing = surveyService.getResponseByDate(now).get(0);
+            return surveyService.updateResponse(customer, existing, update);
+        } else {
             return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
           //  }
         }
