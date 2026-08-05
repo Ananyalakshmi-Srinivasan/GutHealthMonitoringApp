@@ -24,7 +24,7 @@ public class Customer {
     // Tells the database to automatically generate the value
     // for the primary key whenever a new Customer is saved
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "customerID")
+    @Column(name = "customerID", nullable = false)
     // The actual Java variable that stores the generated primary key
     private Long customerID;
 
