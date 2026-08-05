@@ -20,23 +20,23 @@ import java.util.Optional;
 @Service
 public class SurveyService {
     private final SurveyRepository surveyRepository;
-
     public SurveyService(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;
     }
 
     // get ID components of a response
-    public Long getResponseID(SurveyResponse response) {
-        return response.getSurveyID();
-    }
+//    public Long getResponseID(SurveyResponse response) {
+//        return response.getSurveyID();
+//    }
+
     public LocalDate getResponseDate(SurveyResponse response) {
         return response.getDateCompleted();
     }
 
-    // get responses from Survey Response entity using ID
-    public List<SurveyResponse> getResponseByID(Long ID) {
-       return surveyRepository.findBySurveyID(ID);
-    }
+    //    // get responses from Survey Response entity using ID
+//    public List<SurveyResponse> getResponseByID(Long ID) {
+//       return surveyRepository.findBySurveyID(ID);
+//    }
 
     public List<SurveyResponse> getResponseByDate(LocalDate date) {
         return surveyRepository.findByDateCompleted(date);
@@ -54,16 +54,17 @@ public class SurveyService {
             if (response.getCustomerID() == customer)
             {
                 responses.add(response);
+
             }
         }
-        return surveyRepository.findAll();
+        return responses;
     }
 
     // creates a response to be added when survey submitted.
     public SurveyResponse createResponse(SurveyResponse request, LocalDate date, Customer customer) {
         SurveyResponse response = new SurveyResponse();
-        response.setAttributes(request.getAttributes());
         response.setDateCompleted(date);
+        response.setAttributes(request.getAttributes());
         response.setCustomerID(customer);
         return surveyRepository.save(response);
     }
@@ -85,8 +86,8 @@ public class SurveyService {
 
 
     // delete Survey Responses
-    public void deleteSurveyResponse(Long id) {
-        surveyRepository.deleteById(id);
+    public void deleteSurveyResponse(LocalDate date) {
+        surveyRepository.deleteByDateCompleted(date);
     }
     public void deleteAllResponses() {
         surveyRepository.deleteAll();

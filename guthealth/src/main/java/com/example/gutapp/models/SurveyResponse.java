@@ -26,22 +26,23 @@ import java.time.LocalDate;
 // since the entity processing order is not guaranteed.
 public class SurveyResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="surveyID")
-    private Long surveyID;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name="surveyID")
+//    private Long surveyID;
+
+    @Id // omitting generation strart because we're making field unique
+    @Column(name= "date_completed", nullable = false, unique = true)
+    private LocalDate dateCompleted; // the week of the survey it appears on.
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb", nullable = false)
+    @Column(columnDefinition = "jsonb", nullable = false, insertable = true, updatable = true)
     private JsonNode attributes;
     //JPA doesn’t know how to store JsonNode by default. --> so needed to add hibernate types library
 
-    @Column(name= "date_completed")
-    private LocalDate dateCompleted; // the week of the survey it appears on.
-
     // links to customer table --> many surveys can be dispatched to one customer
     @ManyToOne
-    @JoinColumn(name = "customerID", referencedColumnName = "customerID") // creates foreign key
+    @JoinColumn(name = "customerID", referencedColumnName = "customerID", updatable=false) // creates foreign key
     private Customer customerID; // the type of this column is a customer entity.
 
 }
