@@ -62,7 +62,7 @@ public class SurveyController {
         writer.print('\uFEFF');
 
         //Write the CSV header (column names)
-        writer.println("SurveyID,DateCompleted,CustomerID,SurveyAttributes(JSON)");
+        writer.println("DateCompleted,CustomerID,SurveyAttributes(JSON)");
 
         //Get all data through Service
         List<SurveyResponse> surveys = surveyService.getAllResponses();
@@ -84,7 +84,7 @@ public class SurveyController {
         }
 
         // Generate dynamic table headers
-        StringBuilder header = new StringBuilder("SurveyID,DateCompleted,CustomerID");
+        StringBuilder header = new StringBuilder("DateCompleted,CustomerID");
         for (String symptom : allSymptoms) {
             header.append(",").append(symptom); //Add additional symptom names as column headers
         }
@@ -92,7 +92,7 @@ public class SurveyController {
 
         // Write data line by line
         for (SurveyResponse survey : surveys) {
-            Long surveyID = survey.getSurveyID();
+//            Long surveyID = survey.getSurveyID();
             String dateCompleted = survey.getDateCompleted() != null ? survey.getDateCompleted().toString() : "";
 
             //Securely obtain CustomerID
@@ -103,7 +103,7 @@ public class SurveyController {
             String attributesJson = survey.getAttributes() != null ? survey.getAttributes().toString() : "{}";
             String escapedAttributes = "\"" + attributesJson.replace("\"", "\"\"") + "\"";
             // basic column
-            StringBuilder row = new StringBuilder(String.format("%d,%s,%s", surveyID, dateCompleted, customerIDStr));
+            StringBuilder row = new StringBuilder(String.format(dateCompleted, customerIDStr));
             JsonNode attributes = survey.getAttributes();
 
             // Find the scores in the current questionnaire according to the order of symptoms in the header.
@@ -118,7 +118,7 @@ public class SurveyController {
             }
 
             //Write the concatenated line to the output stream.
-            writer.printf("%d,%s,%s,%s\n", surveyID, dateCompleted, customerIDStr, escapedAttributes);
+            writer.printf(dateCompleted, customerIDStr, escapedAttributes);
             writer.println(row.toString());
         }
 
