@@ -110,7 +110,7 @@ class SurveyServiceTests {
         JsonNode newAttributes = objectMapper.readTree(newJson);
 
         SurveyResponse update = surveyService.updateResponse(now, newAttributes,customer,existing);
-//        update.setAttributes(newAttributes);
+        update.setAttributes(newAttributes);
 
         //the database found the response
         when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
