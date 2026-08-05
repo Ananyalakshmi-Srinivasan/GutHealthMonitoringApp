@@ -105,7 +105,10 @@ class SurveyServiceTests {
         Customer customer = customerService.getCustomerByID(1L); // pull dummy customer
         surveyService.createResponse(existing,now,customer); // create dummy erecord
 
-        //the database found the response
+        System.out.println("old");
+        System.out.println(existing.getAttributes());
+
+        //the database found the response -- what does this do
         when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
         when(surveyRepository.save(any())).thenReturn(existing);
 
