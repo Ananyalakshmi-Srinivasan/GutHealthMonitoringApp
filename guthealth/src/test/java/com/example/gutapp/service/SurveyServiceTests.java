@@ -111,26 +111,28 @@ class SurveyServiceTests {
 
         SurveyResponse update = surveyService.updateResponse(now, newAttributes,customer,existing);
 //        update.setAttributes(newAttributes);
-//
-//        //the database found the response
-//        when(surveyRepository.findById(1L)).thenReturn(Optional.of(existing));
-//        when(surveyRepository.save(any())).thenReturn(existing);
-//
-//        //call update
-//        SurveyResponse result = surveyService.updateResponse(1L, update);
-//
-//        //update successfully
-//        assertEquals(newAttributes, result.getAttributes());
-//    }
 
-//    @Test
-//        //check when id not exits
+        //the database found the response
+        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
+        when(surveyRepository.save(any())).thenReturn(existing);
+
+        //call update
+        SurveyResponse result = surveyService.updateResponse(now, newAttributes,customer,existing);
+
+        //update successfully
+        assertEquals(newAttributes, result.getAttributes());
+    }
+
+    //@Test
+        //check when id not exits
 //    void testUpdateResponseNotExists() {
 //
-//        when(surveyRepository.findById(1L)).thenReturn(Optional.empty());
+//        LocalDate now = LocalDate.now();
+//
+//        when(surveyRepository.findByDateCompleted(now)).thenReturn(Optional.empty());
 //
 //        SurveyResponse update = new SurveyResponse();
-//        SurveyResponse result = surveyService.updateResponse(1L, update);
+//        SurveyResponse result = updateResponse(now, newAttributes,customer,update);
 //        //return null
 //        assertNull(result);
 //    }
