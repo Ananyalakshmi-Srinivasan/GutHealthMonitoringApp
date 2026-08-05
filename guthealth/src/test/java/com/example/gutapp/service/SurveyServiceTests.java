@@ -119,7 +119,10 @@ class SurveyServiceTests {
         List<SurveyResponse> update = surveyService.getResponseByDate(now); // fetch existing response -- in new variable
         update.get(0).setAttributes(newAttributes); //change the attributes.
 
-        //the database found the response
+        System.out.println("intermediate");
+        System.out.println(existing.getAttributes());
+
+        //the database found the response -- what does this do
         when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
         when(surveyRepository.save(any())).thenReturn(existing);
 
