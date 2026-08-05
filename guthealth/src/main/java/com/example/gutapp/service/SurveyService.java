@@ -76,10 +76,10 @@ public class SurveyService {
 //        return response;
 //    }
 
-    public SurveyResponse updateResponse(Customer customer, SurveyResponse exisiting, SurveyResponse update) {
-        existing.setAttributes(update.getAttributes());
-        existing.setCustomerID(customer)
-        return surveyRepository.save(response);
+    public SurveyResponse updateResponse(Customer customer, SurveyResponse existing, JsonNode update) {
+        existing.setAttributes(update);
+        existing.setCustomerID(customer);
+        return surveyRepository.save(existing);
     }
     boolean responseExists(LocalDate date) {
 

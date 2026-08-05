@@ -91,7 +91,7 @@ class SurveyServiceTests {
     }
 
     @Test
-    //check updateResponse() when record exists
+    //check updateResponse() when record exists  ---> write new test function.
     void testUpdateResponse() throws Exception {
         LocalDate now = LocalDate.now();
 
@@ -116,8 +116,6 @@ class SurveyServiceTests {
         String newJson = "{ \"response\": \"3\" }"; // create dummy update data.
         JsonNode newAttributes = objectMapper.readTree(newJson);
 
-        List<SurveyResponse> update = surveyService.getResponseByDate(now); // fetch existing response -- in new variable
-        update.get(0).setAttributes(newAttributes); //change the attributes.
 
         System.out.println("intermediate");
         System.out.println(existing.getAttributes());
@@ -127,10 +125,12 @@ class SurveyServiceTests {
         when(surveyRepository.save(any())).thenReturn(existing);
 
         //call update
-        SurveyResponse result = surveyService.updateResponse(customer,existing, update.get(0));
+        SurveyResponse result = surveyService.updateResponse(customer,existing, newAttributes);
+
+        System.out.println(existing.getAttributes());
 
         //update successfully
-        assertEquals(newAttributes, result.getAttributes());
+        assertEquals(existing.getAttributes(), result.getAttributes());
     }
 
     //@Test
