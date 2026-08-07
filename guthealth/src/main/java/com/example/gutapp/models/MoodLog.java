@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class MoodLog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "moodlogID")
+    @Column(name = "moodlogID", nullable = false)
     private Long moodLogID;
 
     @Column(name = "date_completed", nullable = false)

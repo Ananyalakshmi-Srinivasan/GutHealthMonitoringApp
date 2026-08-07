@@ -71,60 +71,78 @@ class SurveyServiceTests {
     }
 
     @Test
-    void testGetResponseByID() {
+    void testGetResponseByDate() {
 
         SurveyResponse response = new SurveyResponse();
-        response.setSurveyID(1L);
+        LocalDate now = LocalDate.now();
+
+        response.setDateCompleted(now);
 
         //Simulates a new entry to the response table
         //return a list containing response
-        when(surveyRepository.findBySurveyID(1L)).thenReturn(List.of(response));
+        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(response));
         //call service
-        List<SurveyResponse> responses = surveyService.getResponseByID(1L);
+        List<SurveyResponse> responses = surveyService.getResponseByDate(now);
 
         //check the size of the list
         assertEquals(1, responses.size());
         //Verify whether this method has been called before
-        verify(surveyRepository).findBySurveyID(1L);
+        verify(surveyRepository).findByDateCompleted(now);
+    }
+
+    @Test
+    //check updateResponse() when record exists  ---> write new test function.
+    void testUpdateResponse() throws Exception {
+        LocalDate now = LocalDate.now();
+
+        //old JSON (existing data) -- create old existing data -- dummy data
+        String oldJson = "{ \"response\": \"1\" }";
+        JsonNode oldAttributes = objectMapper.readTree(oldJson);
+
+        SurveyResponse existing = new SurveyResponse(); // create 'existing' record
+        existing.setAttributes(oldAttributes); // set record with dummy data
+
+        Customer customer = customerService.getCustomerByID(1L); // pull dummy customer
+        surveyService.createResponse(existing,now,customer); // create dummy erecord
+
+        System.out.println("old");
+        System.out.println(existing.getAttributes());
+
+        //the database found the response -- what does this do
+        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
+        when(surveyRepository.save(any())).thenReturn(existing);
+
+        //new JSON (update data)
+        String newJson = "{ \"response\": \"3\" }"; // create dummy update data.
+        JsonNode newAttributes = objectMapper.readTree(newJson);
+
+
+        System.out.println("intermediate");
+        System.out.println(existing.getAttributes());
+
+        //the database found the response -- what does this do
+        when(surveyRepository.findByDateCompleted(now)).thenReturn(List.of(existing));
+        when(surveyRepository.save(any())).thenReturn(existing);
+
+        //call update
+        SurveyResponse result = surveyService.updateResponse(customer,existing, newAttributes);
+
+        System.out.println(existing.getAttributes());
+
+        //update successfully
+        assertEquals(existing.getAttributes(), result.getAttributes());
     }
 
     //@Test
-    //check updateResponse() when record exists
-//    void testUpdateResponse() throws Exception {
-//
-//        //old JSON (existing data)
-//        String oldJson = "{ \"response\": \"1\" }";
-//        JsonNode oldAttributes = objectMapper.readTree(oldJson);
-//
-//        SurveyResponse existing = new SurveyResponse();
-//        existing.setAttributes(oldAttributes);
-//
-//        //new JSON (update data)
-//        String newJson = "{ \"response\": \"3\" }";
-//        JsonNode newAttributes = objectMapper.readTree(newJson);
-//
-//        SurveyResponse update = new SurveyResponse();
-//        update.setAttributes(newAttributes);
-//
-//        //the database found the response
-//        when(surveyRepository.findById(1L)).thenReturn(Optional.of(existing));
-//        when(surveyRepository.save(any())).thenReturn(existing);
-//
-//        //call update
-//        SurveyResponse result = surveyService.updateResponse(1L, update);
-//
-//        //update successfully
-//        assertEquals(newAttributes, result.getAttributes());
-//    }
-
-//    @Test
-//        //check when id not exits
+    // check when id not exits
 //    void testUpdateResponseNotExists() {
 //
-//        when(surveyRepository.findById(1L)).thenReturn(Optional.empty());
+//        LocalDate now = LocalDate.now();
+//
+//        when(surveyRepository.findByDateCompleted(now)).thenReturn(Optional.empty());
 //
 //        SurveyResponse update = new SurveyResponse();
-//        SurveyResponse result = surveyService.updateResponse(1L, update);
+//        SurveyResponse result = updateResponse(now, newAttributes,customer,update);
 //        //return null
 //        assertNull(result);
 //    }
@@ -146,10 +164,11 @@ class SurveyServiceTests {
     @Test
     //check the deleteSurveyResponse() method
     void testDeleteSurveyResponse() {
+        LocalDate now = LocalDate.now();
         //Check whether deleteById(1L) was actually called
-        surveyService.deleteSurveyResponse(1L);
+        surveyService.deleteSurveyResponse(now);
         //Check whether the mock object's method has been executed
-        verify(surveyRepository).deleteById(1L);
+        verify(surveyRepository).deleteByDateCompleted(now);
     }
 
     @Test

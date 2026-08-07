@@ -7,6 +7,12 @@ import com.example.gutapp.repository.*;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode; // allows jsonb
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,22 +20,26 @@ import java.util.Optional;
 @Service
 public class SurveyService {
     private final SurveyRepository surveyRepository;
-
     public SurveyService(SurveyRepository surveyRepository) {
         this.surveyRepository = surveyRepository;
     }
 
     // get ID components of a response
-    public Long getResponseID(SurveyResponse response) {
-        return response.getSurveyID();
-    }
+//    public Long getResponseID(SurveyResponse response) {
+//        return response.getSurveyID();
+//    }
+
     public LocalDate getResponseDate(SurveyResponse response) {
         return response.getDateCompleted();
     }
 
-    // get responses from Survey Response entity using ID
-    public List<SurveyResponse> getResponseByID(Long ID) {
-       return surveyRepository.findBySurveyID(ID);
+    //    // get responses from Survey Response entity using ID
+//    public List<SurveyResponse> getResponseByID(Long ID) {
+//       return surveyRepository.findBySurveyID(ID);
+//    }
+
+    public List<SurveyResponse> getResponseByDate(LocalDate date) {
+        return surveyRepository.findByDateCompleted(date);
     }
 
     public List<SurveyResponse> getResponseByDate(LocalDate date) {
@@ -48,31 +58,40 @@ public class SurveyService {
             if (response.getCustomerID() == customer)
             {
                 responses.add(response);
+
             }
         }
-        return surveyRepository.findAll();
+        return responses;
     }
 
     // creates a response to be added when survey submitted.
     public SurveyResponse createResponse(SurveyResponse request, LocalDate date, Customer customer) {
         SurveyResponse response = new SurveyResponse();
-        response.setAttributes(request.getAttributes());
         response.setDateCompleted(date);
+        response.setAttributes(request.getAttributes());
         response.setCustomerID(customer);
         return surveyRepository.save(response);
     }
 
     // update function to allow customers to update previous responses to surveys
-    public SurveyResponse updateResponse(LocalDate date, SurveyResponse responseDetails) {
-        List<SurveyResponse> response = getResponseByDate(date);
 
-        if (!(response.isEmpty())) {
-            SurveyResponse existingResponse = response.get(0);
-            //save response
-            existingResponse.setAttributes(responseDetails.getAttributes());
-            return surveyRepository.save(existingResponse);
+//    @Query(value = "UPDATE survey_response SET attributes = :symptomDetails WHERE date_completed = :date IN (SELECT date_completed FROM survey_response WHERE customer = :customer)", nativeQuery = true)
+//    public SurveyResponse updateResponse(@Param("date")LocalDate date, @Param("symptomDetails")JsonNode symptomDetails, @Param("customer")Customer customer, SurveyResponse response) {
+//        return response;
+//    }
+
+    public SurveyResponse updateResponse(Customer customer, SurveyResponse existing, JsonNode update) {
+        existing.setAttributes(update);
+        existing.setCustomerID(customer);
+        return surveyRepository.save(existing);
+    }
+    boolean responseExists(LocalDate date) {
+
+        if (getResponseByDate(date) != null) {
+            return true;
+        } else  {
+            return false;
         }
-        return null;
     }
     boolean responseExists(LocalDate date) {
 
@@ -84,9 +103,10 @@ public class SurveyService {
     }
 
 
+
     // delete Survey Responses
-    public void deleteSurveyResponse(Long id) {
-        surveyRepository.deleteById(id);
+    public void deleteSurveyResponse(LocalDate date) {
+        surveyRepository.deleteByDateCompleted(date);
     }
     public void deleteAllResponses() {
         surveyRepository.deleteAll();
