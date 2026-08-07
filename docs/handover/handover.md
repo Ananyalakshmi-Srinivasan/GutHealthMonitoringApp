@@ -54,7 +54,8 @@ To work on the Flutter client in `guthealth_app/`, make sure the following are i
 + Git, so dependencies and project updates can be pulled locally
 
 If you plan to build for iOS, development must be done on macOS with Xcode installed.
-  + An Apple developer account is needed
++ Contact **Jenny Bailey Cooper** for access to Ferryx's Apple Developer account!
++ Guidance on how to build and release a Flutter app for iOS is given here: https://docs.flutter.dev/deployment/ios .
 
 The notifications feature is not set up for iOS - An apple developer account enrolled in a developer program or members of an organisation’s team in a developer program is required which is a paid service.
 
