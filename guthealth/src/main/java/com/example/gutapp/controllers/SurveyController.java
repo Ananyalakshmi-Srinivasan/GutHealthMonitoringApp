@@ -89,7 +89,6 @@ public class SurveyController {
 
         // Write data line by line
         for (SurveyResponse survey : surveys) {
-//            Long surveyID = survey.getSurveyID();
             String dateCompleted = survey.getDateCompleted() != null ? survey.getDateCompleted().toString() : "";
 
             //Securely obtain CustomerID
@@ -124,12 +123,12 @@ public class SurveyController {
         writer.close();
     }
 
-    @GetMapping("/graph/{customerId}/{symptomName}")
-    public List<SymptomGraphData> getSymptomGraphData(
-            @PathVariable Long customerId,  //Extracting User ID from URL
-            @PathVariable String symptomName) {
-
-        //Pass the two extracted parameters directly to the Service
-        return surveyService.getRealGraphDataForSymptom(customerId, symptomName);
-    }
+//    @GetMapping("/graph/{customerId}/{symptomName}")
+//    public List<SymptomGraphData> getSymptomGraphData(
+//            @PathVariable Long customerId,  //Extracting User ID from URL
+//            @PathVariable String symptomName) {
+//
+//        //Pass the two extracted parameters directly to the Service
+//        return surveyService.getRealGraphDataForSymptom(customerId, symptomName);
+//    }
 }
