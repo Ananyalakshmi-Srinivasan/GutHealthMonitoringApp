@@ -21,10 +21,9 @@
 
 + [AWS Setup](#aws-setup)
 
-+ [Next Steps](#bugs-to-fix)
-  + [Finish Off](#what-needs-to-be-finished)
-  + [Additional Features](#additional-features)
-
++ [Next Steps](#a-idnext-stepsanext-steps)
+  + [Finish Off](#finish-off)
+  + [Suggested future developments](#a-idsuggested-future-developmentsasuggested-future-developments)
 + [Further Documentation](#further-documentation)
 
 + [Who Can Help?](#who-can-help?)
