@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.List;
-
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/response")
@@ -37,7 +33,7 @@ public class SurveyController {
         Long customerID = 1L;  // 1 is the dummy customerid for now
         Customer customer = customerService.getCustomerByID(customerID);
 
-        if (surveyService.getResponseDate(response) == now) {
+        if (Objects.equals(surveyService.getResponseDate(response), now)) {
             return surveyService.updateResponse(surveyService.getResponseDate(response),response);
         } else {
             return surveyService.createResponse(response, now, customer);
