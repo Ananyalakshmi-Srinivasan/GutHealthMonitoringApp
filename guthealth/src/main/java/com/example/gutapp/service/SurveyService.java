@@ -24,28 +24,13 @@ public class SurveyService {
         this.surveyRepository = surveyRepository;
     }
 
-    // get ID components of a response
-//    public Long getResponseID(SurveyResponse response) {
-//        return response.getSurveyID();
-//    }
-
     public LocalDate getResponseDate(SurveyResponse response) {
         return response.getDateCompleted();
     }
 
-    //    // get responses from Survey Response entity using ID
-//    public List<SurveyResponse> getResponseByID(Long ID) {
-//       return surveyRepository.findBySurveyID(ID);
-//    }
-
     public List<SurveyResponse> getResponseByDate(LocalDate date) {
         return surveyRepository.findByDateCompleted(date);
     }
-
-    public List<SurveyResponse> getResponseByDate(LocalDate date) {
-        return surveyRepository.findBySurveyDate(date);
-    }
-
     public List<SurveyResponse> getAllResponses() {
         return surveyRepository.findAll();
     }
@@ -86,12 +71,7 @@ public class SurveyService {
         return surveyRepository.save(existing);
     }
     boolean responseExists(LocalDate date) {
-
-        if (getResponseByDate(date) != null) {
-            return true;
-        } else  {
-            return false;
-        }
+        return  getResponseByDate(date) != null
     }
     boolean responseExists(LocalDate date) {
 
@@ -112,24 +92,24 @@ public class SurveyService {
         surveyRepository.deleteAll();
     }
 
-    public List<SymptomGraphData> getRealGraphDataForSymptom(Long customerId, String symptomName) {
-
-        //Call the Repository and execute the efficient SQL you just wrote.
-        List<Object[]> rawData = surveyRepository.findSymptomGraphData(customerId, symptomName);
-
-        List<SymptomGraphData> graphDataList = new ArrayList<>();
-
-        //Convert Object[] to DTO
-        for (Object[] row : rawData) {
-            if (row[0] != null && row[1] != null) {
-                String date = (String) row[0]; //The SQL statement uses CAST AS TEXT, so the string must be a String.
-                int score = (Integer) row[1];  //Since the SQL statement uses CAST AS INTEGER, the value here must be an Integer.
-
-                graphDataList.add(new SymptomGraphData(date, score));
-            }
-        }
-        return graphDataList;
-    }
+//    public List<SymptomGraphData> getRealGraphDataForSymptom(Long customerId, String symptomName) {
+//
+//        //Call the Repository and execute the efficient SQL you just wrote.
+//        List<Object[]> rawData = surveyRepository.findSymptomGraphData(customerId, symptomName);
+//
+//        List<SymptomGraphData> graphDataList = new ArrayList<>();
+//
+//        //Convert Object[] to DTO
+//        for (Object[] row : rawData) {
+//            if (row[0] != null && row[1] != null) {
+//                String date = (String) row[0]; //The SQL statement uses CAST AS TEXT, so the string must be a String.
+//                int score = (Integer) row[1];  //Since the SQL statement uses CAST AS INTEGER, the value here must be an Integer.
+//
+//                graphDataList.add(new SymptomGraphData(date, score));
+//            }
+//        }
+//        return graphDataList;
+//    }
 }
 
 
