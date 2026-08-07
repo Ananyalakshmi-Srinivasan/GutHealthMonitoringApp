@@ -70,9 +70,7 @@ public class SurveyService {
         existing.setCustomerID(customer);
         return surveyRepository.save(existing);
     }
-    boolean responseExists(LocalDate date) {
-        return  getResponseByDate(date) != null
-    }
+
     boolean responseExists(LocalDate date) {
 
         if (getResponseByDate(date) != null) {
