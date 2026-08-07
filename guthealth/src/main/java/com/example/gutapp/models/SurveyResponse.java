@@ -26,6 +26,11 @@ import java.time.LocalDate;
 // since the entity processing order is not guaranteed.
 public class SurveyResponse {
 
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name="surveyID")
+//    private Long surveyID;
+
     @Id // omitting generation strart because we're making field unique
     @Column(name= "date_completed", nullable = false, unique = true)
     private LocalDate dateCompleted; // the week of the survey it appears on.
