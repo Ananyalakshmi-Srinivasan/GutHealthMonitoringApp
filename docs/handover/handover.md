@@ -21,10 +21,9 @@
 
 + [AWS Setup](#aws-setup)
 
-+ [Next Steps](#bugs-to-fix)
-  + [Finish Off](#what-needs-to-be-finished)
-  + [Additional Features](#additional-features)
-
++ [Next Steps](#a-idnext-stepsanext-steps)
+  + [Finish Off](#finish-off)
+  + [Suggested future developments](#a-idsuggested-future-developmentsasuggested-future-developments)
 + [Further Documentation](#further-documentation)
 
 + [Who Can Help?](#who-can-help?)
@@ -55,7 +54,8 @@ To work on the Flutter client in `guthealth_app/`, make sure the following are i
 + Git, so dependencies and project updates can be pulled locally
 
 If you plan to build for iOS, development must be done on macOS with Xcode installed.
-  + An Apple developer account is needed
++ Contact **Jenny Bailey Cooper** for access to Ferryx's Apple Developer account!
++ Guidance on how to build and release a Flutter app for iOS is given here: https://docs.flutter.dev/deployment/ios .
 
 The notifications feature is not set up for iOS - An apple developer account enrolled in a developer program or members of an organisation’s team in a developer program is required which is a paid service.
 
@@ -221,9 +221,11 @@ The backend directories are explanations are ordered by their place in Spring Bo
 + [./repository/](#repository)
 + [./models/](#models)
 
+
 + [.config/FirebaseConfig.java](#config)
 + [./dto/](#dto)
 + [./scheduler/SurveyReminderScheduler.java](#scheduler)
+
 
 + [src/main/resources/application.properties](#properties)
 + [src/main/resources/static/docs/](#recipe)
@@ -232,6 +234,7 @@ The backend directories are explanations are ordered by their place in Spring Bo
   + `GutAppApplication.java`
     + Main Spring Boot entry point for the backend.
     + Starts the application and enables scheduled tasks such as reminder jobs.
+
 
   + <a id="controllers"></a>`./controllers/`
     
@@ -312,6 +315,7 @@ The backend directories are explanations are ordered by their place in Spring Bo
             + **Attachments:** Supports sending emails with file attachments (e.g., CSV reports) using MimeMessageHelper.
               Implements the EmailService interface and is called by the EmailController.
 
+
 + <a id="repository"></a>`./repository/`
     + Contains the Spring Data JPA repository interfaces used to read and write data in PostgreSQL.
     + This is the persistence layer for lookups, saves, deletes, and custom queries.
@@ -320,6 +324,7 @@ The backend directories are explanations are ordered by their place in Spring Bo
         + `SurveyRepository.java:` In addition to standard CRUD operations, it features a native SQL query (findSymptomGraphData) using PostgreSQL JSONB operators (->>) to extract specific symptom scores for line charts.
         + `MoodLogRepository.java:` Provides data access for emotional logs, including a custom method to find logs by their specific internal ID.
         + `EmailService (Interface):` Defines the contract for email operations, ensuring the implementation can be easily swapped or mocked.
+
 
 + <a id="models"></a>`./models/`
     + Contains the main backend data classes and JPA entities such as customers, survey responses, and mood logs.
@@ -330,13 +335,21 @@ The backend directories are explanations are ordered by their place in Spring Bo
     + Objects of the following entity are made as part of sending an email. 
       + `EmailDetails.java` - Collects the data to needed to send an email
 
+
+
+
+
 + <a id="config"></a>`config/FirebaseConfig.java`
   + Initialises the Firebase Admin SDK when the backend starts.
   + Reads the `FIREBASE_CREDENTIALS` path from configuration so notification code can send FCM messages.
 
+
+
+
 + <a id="scheduler"></a>`scheduler/SurveyReminderScheduler.java`
   + Runs a daily scheduled check and decides whether a biweekly reminder is due.
   + Uses the configured anchor date and triggers `NotificationService` every 14 days.
+
 
 +  <a id="dto"></a>`./dto/`
 
@@ -348,18 +361,22 @@ The backend directories are explanations are ordered by their place in Spring Bo
         + Simple DTO used for the historical symptom graph API.
         + Carries a date and severity score pair for the Flutter chart.
 
+
 + <a id="properties"></a>`src/main/resources/application.properties`
     + Stores local backend configuration keys for database access, mail settings, and notification scheduling.
     + Also defines the `notifications.reminder-anchor-date` used by the scheduler.
+
+  
 
 + <a id="recipe-docs"></a>`src/main/resources/static/docs/`
     + Holds the recipe and resource PDFs served by the backend.
     + These files support the frontend recipe and client resource page.
 
+
   + `src/test/java/...`
       + Contains backend service-layer tests for customers, mood logs, and surveys.
       + These are the main automated checks currently present in the Spring Boot project.  
-        
+
       + `CustomerServiceTests.java`.
         + Validates user security and account management logic.
         + **Password Security:** Verifies that **updatePassword** correctly utilizes BCrypt for hashing. The tests specifically check that the stored password starts with the $2 prefix (standard for BCrypt) and is not stored in plain text.
@@ -379,17 +396,7 @@ The backend directories are explanations are ordered by their place in Spring Bo
       + **Error Handling:** Specifically tests the "Not Found" scenario for updateResponse, ensuring the service returns null gracefully when an invalid ID is provided.
       + **Bulk Actions:** Confirms that the deleteAllResponses method correctly communicates with the repository to clear data.
 
-# REVIEW - niyor
-
-**Notification-related backend files are mainly split across the following areas:**
-
-+ `guthealth/src/main/java/com/example/gutapp/config/FirebaseConfig.java`
-    + initialises the Firebase Admin SDK for backend push notification support.
-  + `guthealth/src/main/java/com/example/gutapp/controllers/NotificationController.java`
-      + exposes the notification endpoint used to trigger reminder sending.
-  + `guthealth/src/main/java/com/example/gutapp/service/NotificationService.java`
-      + contains the logic for constructing and sending Firebase Cloud Messaging notifications.
-  + `guthealth/src/main/java/com/example/gutapp/scheduler/SurveyReminderScheduler.java` + handles scheduled survey reminder behaviour on the backend.
+    
 
 ### Front end project breakdown
 
@@ -406,38 +413,58 @@ The `guthealth_app/lib/screens/` directory contains the main user-facing pages o
 + The app entry point is `guthealth_app/lib/main.dart`.
 + The default landing page is the **login screen**.
 + Key screens in `guthealth_app/lib/screens/` are:
+
+
   + `guthealth_app/lib/screens/login_screen.dart`
     + Handles user login.
     + Sends user credentials to the backend login endpoint and routes the user into the app after a successful response.
     + Uses a hard-coded backend base URL, so future teams should update this file when switching to a local backend.
+    
+
   + `guthealth_app/lib/screens/signup_screen.dart`
     + Handles account registration.
     + Collects user details and submits them to the backend signup endpoint.
     + Uses a hard-coded backend base URL, so future teams should update this file when switching to a local backend.
+
+
   + `guthealth_app/lib/screens/home_screen.dart`
     + Acts as the main landing page after login.
     + Provides navigation into the survey, mood log, recipe, and historical data flows.
+
+
   + `guthealth_app/lib/screens/survey_screen.dart`
     + Implements the symptom logging flow.
     + Shows one symptom at a time, collects scores using sliders, and submits the completed response to the backend.
     + Uses a hard-coded backend base URL, so future teams should update this file when switching to a local backend.
+  
+
   + `guthealth_app/lib/screens/past_data_screen.dart`
     + Displays historical symptom data in graph form.
     + Requests graph data from the backend when the selected symptom changes.
     + Uses a hard-coded backend base URL, so future teams should update this file when switching to a local backend.
+
+
   + `guthealth_app/lib/screens/mood_log.dart`
     + Implements the mood logging flow.
     + Lets the user search and select moods, write a journal entry, and submit the mood log to the backend.
     + Uses a hard-coded backend base URL, so future teams should update this file when switching to a local backend.
+
+
   + `guthealth_app/lib/screens/calendar_screen.dart`
     + Displays a calendar-based mood and journal view.
     + Currently acts as a simple display page and still uses placeholder mood logic rather than fully loading persisted mood history from the backend.
+
+
   + `guthealth_app/lib/screens/journal.dart`
     + Displays the journal text associated with a mood log entry.
     + This is a lightweight read-only page used after the mood log flow and from the calendar screen.
+
+
   + `guthealth_app/lib/screens/notification_screen.dart`
     + Contains the in-app notification screen UI.
     + At the moment this page is still mostly a placeholder and does not yet represent a full notification history feature.
+
+
   + `guthealth_app/lib/screens/recipe_screen.dart`
     + Provides access to recipe and client resource documents exposed by the backend.
     + Opens hosted PDF resources for the user.
@@ -567,8 +594,11 @@ https://www.geeksforgeeks.org/springboot/spring-boot-sending-email-via-smtp/
     
 ## <a id="database-structure"></a>Database Structure
 
-This is the current structure of the database in the app. 
 
+# ADJUST THIS !!!
+
+This is the current structure of the database in the app. 
+ 
 ![database.png](../asserts/database/final_database.png)
 
 ### Quick Links
@@ -593,12 +623,11 @@ This is the model for each registered user of the Gut Health Monitoring App.
 ### <a id="surveyresponse"></a>SurveyResponse
 This stores one completed symptom survey submitted by a customer.
 
-| Field | JPA / Database Type | Explanation |
-|---|---|---|
-| `surveyID` | `Long` / Primary Key | Primary key: unique identifier for each survey response. |
-| `attributes` | `JsonNode` / `jsonb` | Stores the symptom answers as JSON in PostgreSQL. This allows the app to keep symptom names and scores together in one flexible field. |
-| `dateCompleted` | `LocalDate` / `date_completed` column | Stores the date the survey was completed. In practice this represents the week/date attached to that survey entry. |
-| `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each survey response back to the customer who submitted it. The foreign key references `customer.customerID`. |
+| Field | JPA / Database Type | Explanation                                                                                                                                                                                                             |
+|---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dateCompleted` | `LocalDate` / Primary Key | Primary key: Unique identifier for each survey response. Stores the date the survey was completed. In practice this represents the week/date attached to that survey entry. |
+| `attributes` | `JsonNode` / `jsonb` | Stores the symptom answers as JSON in PostgreSQL. This allows the app to keep symptom names and scores together in one flexible field.                                                                                  |
+| `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each survey response back to the customer who submitted it. The foreign key references `customer.customerID`.                                                                           |
 
 ### <a id="moodlog"></a>MoodLog
 This stores one mood journal entry submitted by a customer.
@@ -642,7 +671,6 @@ This stores one mood journal entry submitted by a customer.
 > You must have a key pair set up to be able to connect to the EC2 instance. 
 > To set this up contact a team member to generate a key pair. 
 > Once you have your key pair run `chmod 400 "GutHealthAppKey.pem"` to ensure your key is not publicly viewable.
->
 >
 
 **Backend**
@@ -691,17 +719,20 @@ Before any further development make the following bug fixes and tweaks to the ex
 **1.  Symptom log Page**
 
    + Symptom log submissions are still being saved against a dummy backend user instead of the real logged-in customer.
-     + `SurveyController.saveResponse(...)` currently hard-codes `Long customerID = 1L;`
-     + the frontend passes `customerId` through navigation, but that value is not used in the survey submission endpoint yet.
-     + Hence, symptom data can be attached to the wrong account,
+     + `SurveyController.saveResponse(...)` currently hard-codes `Long customerID = 1L;` the frontend passes `customerId` through navigation, but that value is not used in the survey submission endpoint yet.
+     + Hence, symptom data can be attached to the wrong account, 
      + Hence, past-data graphs for a real user does not reflect the data they just submitted.
+     + **Next Step**: Pass the authenticated customer ID from the frontend instead of using the hard-coded `1L`.
 
+   ## gettting fixed
    + The symptom log flow is creating duplicate responses instead of updating an existing response for the same period.
      + `SurveyScreen` only sends new data through `POST /api/response/submit`,
      + `SurveyService.createResponse(...)` always creates a new row,
      + There is no unique rule enforcing one response per day for a customer. 
      + Users may accidentally submit the same symptom log twice.
      + Downstream graphing and export data can become noisy or misleading.
+
+   ## above getting fixed 
 
    + The frontend survey page still uses a hard-coded deployed backend URL. We should use environment variables. 
      + `survey_screen.dart` directly calls `http://<ec2-endpoint>/api/response/submit`.
@@ -722,20 +753,18 @@ Before any further development make the following bug fixes and tweaks to the ex
 
 + Mood log currently does not support loading and editing an existing entry for the current day.
   + If a user returns later to add or change their journal, they must reselect moods because the screen is not pre-filled from saved backend data.
-  + To fix this add a controller endpoint and frontend flow wired to the existing `updateMood(...)` backend service method.
+  + **Next Steps**: To fix this add a controller endpoint and frontend flow wired to the existing `updateMood(...)` backend service method.
+    + Also change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
 + The controller currently ignores the real logged-in user and always saves the mood log against dummy customer `1L`. (same issue as Symptom Log Page)
 + `CalendarScreen` does not fetch real mood data from the backend. Its `moodForDay(...)` function currently generates a placeholder mood locally from the date, so the emoji shown there is not a true persisted mood log.
-+ The journal displayed after submission is currently passed through navigation rather than being re-fetched from backend storage.
+  + The journal displayed after submission is currently passed through navigation rather than being re-fetched from backend storage.
 
-### <a id="suggested-next-steps-for-future-developers"></a>Suggested next steps for future developers
+    
+### <a id="suggested-future-developments"></a>Suggested future developments
 
-+ Pass the authenticated customer ID from the frontend instead of using the hard-coded `1L`.
 + Add a backend endpoint to fetch a mood log by customer and date.
 + Add a `PUT` or `PATCH` endpoint for editing an existing mood log.
-+ Change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
 + Update `CalendarScreen` so it displays real backend data rather than placeholder values.
-
-### <a id="what-needs-to-be-finished"></a>What needs to be finished: 
 
 + The app needs to have a function that asynchronously sends data to Ferryx every two weeks. 
   + This is to allow Ferryx's data analysts so they can gauge the effectiveness of Ferrocalm 
@@ -750,7 +779,6 @@ Before any further development make the following bug fixes and tweaks to the ex
       + attachment --> the csv file containing symptom data. 
   + This will be used to make an EmailDetails object that can be used by the `sendMailWithAttachment()` in the controller to send the update to Ferryx.
 
-### <a id="additional-features"></a>Additional Features
 + Recipes page - Instead of just a page that has links to the recipes as a PDF it will be a page that imports the recipes from Ferryx into a list view with:
   + Filtering for dietary requirements
   + Recommendations from food log history
