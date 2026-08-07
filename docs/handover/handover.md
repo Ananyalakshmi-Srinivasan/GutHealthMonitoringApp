@@ -566,6 +566,9 @@ https://www.geeksforgeeks.org/springboot/spring-boot-sending-email-via-smtp/
     
 ## <a id="database-structure"></a>Database Structure
 
+
+# ADJUST THIS !!!
+
 This is the current structure of the database in the app. 
 
 ![database.png](../asserts/database/final_database.png)
