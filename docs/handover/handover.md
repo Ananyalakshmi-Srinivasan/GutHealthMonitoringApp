@@ -592,12 +592,11 @@ This is the model for each registered user of the Gut Health Monitoring App.
 ### <a id="surveyresponse"></a>SurveyResponse
 This stores one completed symptom survey submitted by a customer.
 
-| Field | JPA / Database Type | Explanation |
-|---|---|---|
-| `surveyID` | `Long` / Primary Key | Primary key: unique identifier for each survey response. |
-| `attributes` | `JsonNode` / `jsonb` | Stores the symptom answers as JSON in PostgreSQL. This allows the app to keep symptom names and scores together in one flexible field. |
-| `dateCompleted` | `LocalDate` / `date_completed` column | Stores the date the survey was completed. In practice this represents the week/date attached to that survey entry. |
-| `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each survey response back to the customer who submitted it. The foreign key references `customer.customerID`. |
+| Field | JPA / Database Type | Explanation                                                                                                                                                                                                             |
+|---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dateCompleted` | `LocalDate` / Primary Key | Primary key: Unique identifier for each survey response. Stores the date the survey was completed. In practice this represents the week/date attached to that survey entry. |
+| `attributes` | `JsonNode` / `jsonb` | Stores the symptom answers as JSON in PostgreSQL. This allows the app to keep symptom names and scores together in one flexible field.                                                                                  |
+| `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each survey response back to the customer who submitted it. The foreign key references `customer.customerID`.                                                                           |
 
 ### <a id="moodlog"></a>MoodLog
 This stores one mood journal entry submitted by a customer.
