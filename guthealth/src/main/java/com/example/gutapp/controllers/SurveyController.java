@@ -29,12 +29,11 @@ public class SurveyController {
         this.customerService = customerService;
     }
 
-
     // Flutter send POST /api/response/submit
     @PostMapping("/submit")
     public SurveyResponse saveResponse(@RequestBody SurveyResponse response) {
         LocalDate now = LocalDate.now();
-        Long customerID = 1L;
+        Long customerID = 1L;  // 1 is the dummy customerid for now
         Customer customer = customerService.getCustomerByID(customerID);
 
         if (Objects.equals(surveyService.getResponseDate(response), now)) {
