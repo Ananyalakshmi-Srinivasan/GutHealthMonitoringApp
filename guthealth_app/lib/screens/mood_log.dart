@@ -77,7 +77,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
   List<Emotion> selectedEmotions = [];
 
 
-  Future<void> _submitMood() async {
+  Future<void> submitMood() async {
     if (selectedEmotions.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please select at least one mood')),
@@ -104,10 +104,14 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
       if (!mounted) return;
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        debugPrint("Saved successfully: ${response.body}");
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Mood saved successfully')),
         );
       } else {
+        debugPrint("Saved successfully: ${response.body}");
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Save failed, continue anyway')),
         );
@@ -228,7 +232,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
                   width: double.infinity,
                   height: 52,
                   child: ElevatedButton(
-                    onPressed: _submitMood,
+                    onPressed: submitMood,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFe0868d),
                       foregroundColor: Colors.white,
