@@ -42,6 +42,10 @@ public class SurveyService {
         return surveyRepository.findByDateCompleted(date);
     }
 
+    public List<SurveyResponse> getResponseByDate(LocalDate date) {
+        return surveyRepository.findBySurveyDate(date);
+    }
+
     public List<SurveyResponse> getAllResponses() {
         return surveyRepository.findAll();
     }
@@ -89,6 +93,15 @@ public class SurveyService {
             return false;
         }
     }
+    boolean responseExists(LocalDate date) {
+
+        if (getResponseByDate(date) != null) {
+            return true;
+        } else  {
+            return false;
+        }
+    }
+
 
 
     // delete Survey Responses
