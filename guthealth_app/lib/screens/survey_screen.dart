@@ -35,11 +35,7 @@ class SurveyScreenState extends State<SurveyScreen> {
   int get totalSteps => symptoms.length;
 
   Future<void> submitSurvey(Map<String, dynamic> formData) async {
-<<<<<<< HEAD
-    final url = Uri.parse("http://10.0.0.2:8080/api/response/submit");
-=======
     final url = Uri.parse("http://10.0.2.2:8080/api/response/submit");
->>>>>>> acc67b680cb2581303ce44cf35dba059d3b4622c
       //submit used here because that's the url the springboot end is expecting the post request on!!
     final response = await http.post(
       url,
