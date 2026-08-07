@@ -728,9 +728,9 @@ Before any further development make the following bug fixes and tweaks to the ex
 + `CalendarScreen` does not fetch real mood data from the backend. Its `moodForDay(...)` function currently generates a placeholder mood locally from the date, so the emoji shown there is not a true persisted mood log.
 + The journal displayed after submission is currently passed through navigation rather than being re-fetched from backend storage.
 
-### <a id="suggested-next-steps-for-future-developers"></a>Suggested next steps for future developers
+    
+### <a id="suggested-future-developments"></a>Suggested future developments
 
-+ Pass the authenticated customer ID from the frontend instead of using the hard-coded `1L`.
 + Add a backend endpoint to fetch a mood log by customer and date.
 + Add a `PUT` or `PATCH` endpoint for editing an existing mood log.
 + Change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
