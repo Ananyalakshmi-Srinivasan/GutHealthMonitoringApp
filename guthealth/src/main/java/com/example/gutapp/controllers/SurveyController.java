@@ -3,6 +3,8 @@ package com.example.gutapp.controllers;
 import com.example.gutapp.dto.SymptomGraphData;
 import com.example.gutapp.models.*;
 import com.example.gutapp.service.*;
+import com.example.gutapp.repository.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +18,15 @@ import java.util.*;
 @RequestMapping("/api/response")
 public class SurveyController {
 
+    private final SurveyRepository surveyRepository;
     private final SurveyService surveyService;
     private final CustomerService customerService;
     // private final DateTimeController dTController;
 
-    public SurveyController(SurveyService surveyService, CustomerService customerService) {
+    public SurveyController(SurveyRepository surveyRepository, SurveyService surveyService, CustomerService customerService) {
+        this.surveyRepository = surveyRepository;
         this.surveyService = surveyService;
         this.customerService = customerService;
-        //this.dTController = dtController;
     }
 
     // Flutter send POST /api/response/submit
@@ -34,11 +37,13 @@ public class SurveyController {
         Customer customer = customerService.getCustomerByID(customerID);
 
         if (Objects.equals(surveyService.getResponseDate(response), now)) {
-            return surveyService.updateResponse(surveyService.getResponseDate(response),response);
+            JsonNode update = response.getAttributes();
+            SurveyResponse existing = surveyService.getResponseByDate(now).get(0);
+            return surveyService.updateResponse(customer, existing, update);
         } else {
-            return surveyService.createResponse(response, now, customer);
+            return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+            }
         }
-    }
 
     @GetMapping("/export")
     public void exportSurveysToCSV(HttpServletResponse response) throws IOException {
@@ -54,7 +59,7 @@ public class SurveyController {
         writer.print('\uFEFF');
 
         //Write the CSV header (column names)
-        writer.println("SurveyID,DateCompleted,CustomerID,SurveyAttributes(JSON)");
+        writer.println("DateCompleted,CustomerID,SurveyAttributes(JSON)");
 
         //Get all data through Service
         List<SurveyResponse> surveys = surveyService.getAllResponses();
@@ -76,7 +81,7 @@ public class SurveyController {
         }
 
         // Generate dynamic table headers
-        StringBuilder header = new StringBuilder("SurveyID,DateCompleted,CustomerID");
+        StringBuilder header = new StringBuilder("DateCompleted,CustomerID");
         for (String symptom : allSymptoms) {
             header.append(",").append(symptom); //Add additional symptom names as column headers
         }
@@ -84,7 +89,7 @@ public class SurveyController {
 
         // Write data line by line
         for (SurveyResponse survey : surveys) {
-            Long surveyID = survey.getSurveyID();
+//            Long surveyID = survey.getSurveyID();
             String dateCompleted = survey.getDateCompleted() != null ? survey.getDateCompleted().toString() : "";
 
             //Securely obtain CustomerID
@@ -95,7 +100,7 @@ public class SurveyController {
             String attributesJson = survey.getAttributes() != null ? survey.getAttributes().toString() : "{}";
             String escapedAttributes = "\"" + attributesJson.replace("\"", "\"\"") + "\"";
             // basic column
-            StringBuilder row = new StringBuilder(String.format("%d,%s,%s", surveyID, dateCompleted, customerIDStr));
+            StringBuilder row = new StringBuilder(String.format(dateCompleted, customerIDStr));
             JsonNode attributes = survey.getAttributes();
 
             // Find the scores in the current questionnaire according to the order of symptoms in the header.
@@ -110,7 +115,7 @@ public class SurveyController {
             }
 
             //Write the concatenated line to the output stream.
-            writer.printf("%d,%s,%s,%s\n", surveyID, dateCompleted, customerIDStr, escapedAttributes);
+            writer.printf(dateCompleted, customerIDStr, escapedAttributes);
             writer.println(row.toString());
         }
 
