@@ -77,7 +77,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
   List<Emotion> selectedEmotions = [];
 
 
-  Future<void> submitMood() async {
+  Future<void> _submitMood() async {
     if (selectedEmotions.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please select at least one mood')),
@@ -232,7 +232,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
                   width: double.infinity,
                   height: 52,
                   child: ElevatedButton(
-                    onPressed: submitMood,
+                    onPressed: _submitMood,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFe0868d),
                       foregroundColor: Colors.white,
