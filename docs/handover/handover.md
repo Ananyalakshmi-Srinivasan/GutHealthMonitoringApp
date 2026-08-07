@@ -704,6 +704,8 @@ Before any further development make the following bug fixes and tweaks to the ex
      + Users may accidentally submit the same symptom log twice.
      + Downstream graphing and export data can become noisy or misleading.
 
+   ## above getting fixed 
+
    + The frontend survey page still uses a hard-coded deployed backend URL. We should use environment variables. 
      + `survey_screen.dart` directly calls `http://<ec2-endpoint>/api/response/submit`.
      + Local development and environment switching is tedious as a result. 
