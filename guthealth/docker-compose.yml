@@ -2,9 +2,9 @@ services:
 
   app:
     env_file: .env
-    image: 'gutapp:latest'
+    image: 'gutapp:latest' # image name we're giving.
     build:
-     context: ${DOCKERFILE}
+     context: ${DOCKERFILE} #docker file gives the build context.
     container_name: gutapp
     depends_on:
       - db
@@ -20,11 +20,11 @@ services:
       - "8080:80"
 
   db:
-    image: 'postgres:15'
-    container_name: gutapp_db
+    image: 'postgres:17' # image we're depending on since we're using postgres 17 in instance
+    container_name: gutapp_db # name of container created based on image.
     environment:
       - POSTGRES_USER=${DB_USERNAME}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
-    ports:
+    ports: # local postgres port and host port.
       - "5432:80"
