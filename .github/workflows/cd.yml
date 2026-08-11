@@ -72,11 +72,11 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
-#      - name: set lower case owner name
-#        run: |
-#          echo "OWNER_LC=${OWNER,,}" >>${REPO_OWNER}
-#        env:
-#          OWNER: '${{ github.repository_owner }}'
+      - name: set lower case owner name
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${REPO_OWNER}
+        env:
+          OWNER: '${{ github.repository_owner }}'
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v7
@@ -84,7 +84,7 @@ jobs:
           context: ./guthealth
           file: ./guthealth/Dockerfile
           push: true
-          tags: ghcr.io/${REPO_OWNER}/gutapp:latest
+          tags: ghcr.io/REPO_OWNER/gutapp:latest
           platforms: linux/amd64, linux/arm64/v8
 
 
