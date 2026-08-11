@@ -71,7 +71,7 @@ jobs:
           context: ./guthealth
           file: ./guthealth/Dockerfile
           push: true
-          tags: ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{secrets.AWS_ECR}}
+          tags: ${{secrets.AWS_ECR}} ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{secrets.AWS_ECR}}
           platforms: linux/amd64, linux/arm64/v8
 
       - name: Login to GitHub Container Registry
