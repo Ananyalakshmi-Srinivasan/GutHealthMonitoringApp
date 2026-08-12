@@ -72,7 +72,7 @@ jobs:
           repo-name: ${{secrets.AWS_ECR}}
           qtd-images: 0
         # Set of instructions to push an image to ecr.
-      - name: Build and Push Docker Image to ECR
+      - name: Build and Push Docker Image to Elastic Container Registry
         uses: docker/build-push-action@v7  # using official docker build and push workflow.
         with:
           context: ./guthealth # context is the ./guthealth folder because> this is where springboot backend lies --> compiled target lives here.
