@@ -76,6 +76,7 @@ jobs:
       - name: Build and Push Docker Image to ECR
         uses: docker/build-push-action@v7
         with:
+          provenance: false
           context: ./guthealth
           file: ./guthealth/Dockerfile
           push: true
