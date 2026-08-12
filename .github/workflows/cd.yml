@@ -63,7 +63,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          
+
           registry-type: 'private'
 
       - name: Build and Push Docker Image to ECR
@@ -72,7 +72,7 @@ jobs:
           ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
           IMAGE_TAG: latest
         run: |
-            docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+            docker build -t $ECR_REGISTRY/${{secrets.AWS_ECR_REPO}}:$IMAGE_TAG .
             docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 #        uses: docker/build-push-action@v7
 
