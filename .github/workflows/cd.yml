@@ -68,7 +68,7 @@ jobs:
 
       - name: Cleanup Docker images (optional)
         run: |
-          docker rmi ${{secrets.AWS_ECR}}:latest || true
+          docker rmi ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest || true
 
         # Set of instructions to push an image to ecr.
 
@@ -81,7 +81,6 @@ jobs:
           provenance: false # set provenance to false to ensure we ignore metadata images and only pushes one image for each platform and an image index which is a tag/id of the bundle of both images
           tags: ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest # uses predetermined steps to login to private registry and access repo and tags as latest!
           platforms: linux/amd64, linux/arm64/v8 # adds one image for arm, one for amd
-
 
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v4
@@ -98,7 +97,6 @@ jobs:
 #          push: true
 #          tags: ghcr.io/${{ secrets.REPO_OWNER }}/gutapp:latest
 #          platforms: linux/amd64, linux/arm64/v8
-
 
 
 #      - name: Deploy application
