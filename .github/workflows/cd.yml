@@ -65,6 +65,12 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Cleanup existing Images from Elastic Container Registry
+        id: cleanup-ecr
+        uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
+        with:
+          repo-name: ${{secrets.AWS_ECR}}
+          qtd-images: 0
         # Set of instructions to push an image to ecr.
       - name: Build and Push Docker Image to ECR
         uses: docker/build-push-action@v7  # using official docker build and push workflow.
