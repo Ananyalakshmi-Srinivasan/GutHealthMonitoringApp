@@ -66,18 +66,13 @@ jobs:
           registry-type: 'private'
           registry: ${{ steps.login-pf-aws-ecr.outputs.registry }}
 
-
       - name: Build and Push Docker Image to ECR
         uses: docker/build-push-action@v7
         with:
           context: ./guthealth
           file: ./guthealth/Dockerfile
           push: true
-          env:
-            ECR_REGISTRY: ${{ steps.login-pf-aws-ecr.outputs.registry }}
-            ECR_REPOSITORY: ${{secrets.AWS_ECR}}
-            IMAGE_TAG: latest
-          tags: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          tags: ${{ steps.login-pf-aws-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
           platforms: linux/amd64, linux/arm64/v8
 
       - name: Login to GitHub Container Registry
