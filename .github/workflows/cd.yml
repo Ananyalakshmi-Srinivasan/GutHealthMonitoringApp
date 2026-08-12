@@ -72,9 +72,9 @@ jobs:
           context: ./guthealth # context is the ./guthealth folder because> this is where springboot backend lies --> compiled target lives here.
           file: ./guthealth/Dockerfile # Dockerfile instructs how to create a docker image
           push: true
-          provenance: false # set provenance to false to ensure we ignore metadata images and push one image only.
-          tags: ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
-          platforms: linux/amd64, linux/arm64/v8
+          provenance: false # set provenance to false to ensure we ignore metadata images and only pushes one image for each platform and an image index which is a tag/id of the bundle of both images
+          tags: ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest # uses predetermined steps to login to private registry and access repo and tags as latest!
+          platforms: linux/amd64, linux/arm64/v8 # adds one image for arm, one for amd
 
 
 #      - name: Login to GitHub Container Registry
