@@ -73,9 +73,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
             docker build -t $ECR_REGISTRY/${{secrets.AWS_ECR_REPO}}:$IMAGE_TAG .
-            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-#        uses: docker/build-push-action@v7
-
+            docker push $ECR_REGISTRY/${{secrets.AWS_ECR_REPO}}:$IMAGE_TAG
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v4
