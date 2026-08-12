@@ -72,7 +72,7 @@ jobs:
           context: ./guthealth # context is the ./guthealth folder because> this is where springboot backend lies --> compiled target lives here.
           file: ./guthealth/Dockerfile # Dockerfile instructs how to create a docker image
           push: true
-          provenance: true # set provenance to false to ensure we ignore metadata images and push one image only.
+          provenance: false # set provenance to false to ensure we ignore metadata images and push one image only.
           tags: ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
           platforms: linux/amd64, linux/arm64/v8
 
