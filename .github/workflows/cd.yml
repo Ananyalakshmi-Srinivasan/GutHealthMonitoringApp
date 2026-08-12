@@ -60,18 +60,18 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region:  ${{ secrets.AWS_REGION }}
-
-        # Workflow that uses credentials to login to ecr!
-      - name: Login to Amazon Elastic Container Registry
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-
       - name: Cleanup existing Images from Elastic Container Registry
         id: cleanup-ecr
         uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
         with:
           repo-name: ${{secrets.AWS_ECR}}
-          qtd-images: 15
+          qtd-images: 2
+        # Workflow that uses credentials to login to ecr!
+      - name: Login to Amazon Elastic Container Registry
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+
         # Set of instructions to push an image to ecr.
 
       - name: Build and Push Docker Image to Elastic Container Registry
