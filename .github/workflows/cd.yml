@@ -71,7 +71,7 @@ jobs:
         uses: LeiaInc/devops-delete-old-aws-ecr-images@v1
         with:
           repo-name: ${{secrets.AWS_ECR}}
-          qtd-images: 0
+          qtd-images: 15
         # Set of instructions to push an image to ecr.
 
       - name: Build and Push Docker Image to Elastic Container Registry
