@@ -100,19 +100,15 @@ jobs:
 #          platforms: linux/amd64, linux/arm64/v8
 
 
-#      - name: Deploy application
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ec2-user
-#          key: ${{ secrets.EC2_PRIVATE_KEY }}
-#          script: |
-#            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-#            docker pull ghcr.io/spe-uob/gutapp:latest
-#            docker stop gutapp || true
-#            docker rm gutapp || true
-#            docker run ghcr.io/spe-uob/gutapp:latest
-
+      - name: Deploy gutapp backend
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+            sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
 #  build-frontend:
 #    runs-on: ubuntu-latest
 #    defaults:
