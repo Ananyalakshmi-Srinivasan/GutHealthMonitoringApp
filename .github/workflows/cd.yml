@@ -107,6 +107,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
+            whoami
+            ls -al
             sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
             sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
 #  build-frontend:
