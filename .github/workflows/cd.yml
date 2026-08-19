@@ -101,7 +101,7 @@ jobs:
 
 
       - name: Deploy gutapp backend
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v.0.1.14
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
