@@ -86,8 +86,8 @@ jobs:
 
       - name: Create .ssh key file
         run: |
-          touch GutHealthAppKey.pem"
-          echo ${{ secrets.EC2_PRIVATE_KEY }} >> GutHealthAppKey.pem"
+          touch GutHealthAppKey.pem
+          echo ${{ secrets.EC2_PRIVATE_KEY }} >> GutHealthAppKey.pem
 
       - name: Ssh into EC2
         run: |
