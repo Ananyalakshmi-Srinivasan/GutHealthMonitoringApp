@@ -85,18 +85,18 @@ jobs:
           platforms: linux/amd64, linux/arm64/v8 # adds one image for arm, one for amd
 
 
-      - name: Deploy gutapp backend
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }} #changed the host.
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          port: ${{ secrets.EC2_PORT }}
-          script: |
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
-            sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
-            sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
-
+#      - name: Deploy gutapp backend
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.EC2_HOST }} #changed the host.
+#          username: ${{ secrets.EC2_USERNAME }}
+#          key: ${{ secrets.EC2_PRIVATE_KEY }}
+#          port: ${{ secrets.EC2_PORT }}
+#          script: |
+#            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#            sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#            sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#
 
       
 
