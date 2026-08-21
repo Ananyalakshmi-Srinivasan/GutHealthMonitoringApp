@@ -95,6 +95,7 @@ jobs:
           sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
           sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
           
+          
 
 #                - name: Deploy gutapp backend
 #        uses: appleboy/ssh-action@master
