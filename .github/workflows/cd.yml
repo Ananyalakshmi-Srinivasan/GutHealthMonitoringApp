@@ -83,25 +83,34 @@ jobs:
           tags: ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest # uses predetermined steps to login to private registry and access repo and tags as latest!
           platforms: linux/amd64, linux/arm64/v8 # adds one image for arm, one for amd
 
-      - name: Deploy gutapp backend
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }} #changed the host.
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          port: ${{ secrets.EC2_PORT }}
-          script: |
-            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
-            sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
-            sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
 
+      - name: Create .ssh key file
+        run: |
+          touch GutHealthAppKey.pem"
+          echo ${{ secrets.EC2_PRIVATE_KEY }} >> GutHealthAppKey.pem"
 
-#      - name: Create .ssh key file
-#        run: | touch .ssh
+      - name: Ssh into EC2
+        run: |
+          ssh -i "GutHealthAppKey.pem" ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}
+          sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+          sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
           
 
+#                - name: Deploy gutapp backend
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.EC2_HOST }} #changed the host.
+#          username: ${{ secrets.EC2_USERNAME }}
+#          key: ${{ secrets.EC2_PRIVATE_KEY }}
+#          port: ${{ secrets.EC2_PORT }}
+#          script: |
+#            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#            sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#            sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
 
 
+      
+          
 
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v4
