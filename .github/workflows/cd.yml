@@ -32,7 +32,7 @@ jobs:
 #          mkdir -p secrets
 #          printf '%s' "$FIREBASE_CREDENTIALS_JSON" > secrets/serviceAccountKey.json
 
-      - name: 'Create env file'
+      - name: Create env file
         run: |
           touch .env
           echo DB_URL=${{ secrets.DB_URL }} >> .env
@@ -61,12 +61,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region:  ${{ secrets.AWS_REGION }}
 
+
         # Workflow that uses credentials to login to ecr!
       - name: Login to Amazon Elastic Container Registry
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-       # Cleanup workflow doesn't work need to manually remove old images. 
+       # Cleanup workflow doesn't work need to manually remove old images.
 #      - name: Cleanup Docker images (optional)
 #        run: |
 #          docker rmi ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest || true
@@ -82,6 +83,22 @@ jobs:
           provenance: false # set provenance to false to ensure we ignore metadata images and only pushes one image for each platform and an image index which is a tag/id of the bundle of both images
           tags: ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest # uses predetermined steps to login to private registry and access repo and tags as latest!
           platforms: linux/amd64, linux/arm64/v8 # adds one image for arm, one for amd
+
+
+#      - name: Deploy gutapp backend
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.EC2_HOST }} #changed the host.
+#          username: ${{ secrets.EC2_USERNAME }}
+#          key: ${{ secrets.EC2_PRIVATE_KEY }}
+#          port: ${{ secrets.EC2_PORT }}
+#          script: |
+#            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#            sudo docker pull  ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#            sudo docker run -d --name gutappcontainer -p 80:8080 ${{ steps.login-ecr.outputs.registry }}/${{secrets.AWS_ECR}}:latest
+#
+
+      
 
 #      - name: Login to GitHub Container Registry
 #        uses: docker/login-action@v4
@@ -100,18 +117,6 @@ jobs:
 #          platforms: linux/amd64, linux/arm64/v8
 
 
-#      - name: Deploy application
-#        uses: appleboy/ssh-action@master
-#        with:
-#          host: ${{ secrets.EC2_HOST }}
-#          username: ec2-user
-#          key: ${{ secrets.EC2_PRIVATE_KEY }}
-#          script: |
-#            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-#            docker pull ghcr.io/spe-uob/gutapp:latest
-#            docker stop gutapp || true
-#            docker rm gutapp || true
-#            docker run ghcr.io/spe-uob/gutapp:latest
 
 #  build-frontend:
 #    runs-on: ubuntu-latest
