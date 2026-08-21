@@ -61,6 +61,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
           aws-region:  ${{ secrets.AWS_REGION }}
 
+
         # Workflow that uses credentials to login to ecr!
       - name: Login to Amazon Elastic Container Registry
         id: login-ecr
