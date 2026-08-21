@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ main, bug-fix-cd ]
+    branches: [ main ]
 #  pull_request:
 #     branches: [ main ]
 
