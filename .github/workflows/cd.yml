@@ -40,6 +40,7 @@ jobs:
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo FERROCALM_EMAIL=${{ secrets.FERROCALM_EMAIL }} >> .env
           echo FERROCALM_PASSWORD=${{ secrets.FERROCALM_PASSWORD }} >> .env
+          echo pwd
 #          echo FIREBASE_CREDENTIALS=./secrets/serviceAccountKey.json >> .env
 
 
