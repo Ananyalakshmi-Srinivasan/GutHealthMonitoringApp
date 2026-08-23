@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
       darkTheme: TAppTheme.darkTheme,
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(customerId : 1),
+      home: const HomeScreen(customerId : 1L),
 
 
         // add customisation further customisation like colour blind themes etc.

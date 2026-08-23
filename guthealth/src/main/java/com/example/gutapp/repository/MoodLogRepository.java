@@ -8,4 +8,6 @@ import java.util.*;
 public interface MoodLogRepository extends JpaRepository<MoodLog, Long> {
     //Find a customer's mood record for a specific day
     Optional<MoodLog> findByMoodLogID(long moodlogID);
+    List<SurveyResponse> findByDateCompleted(LocalDate dateCompleted);
+
 }

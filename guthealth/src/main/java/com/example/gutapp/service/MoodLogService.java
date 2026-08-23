@@ -21,6 +21,10 @@ public class MoodLogService {
     public Optional<MoodLog> getMoodByID(Long ID) {
         return moodLogRepository.findByMoodLogID(ID);
     }
+    public List<SurveyResponse> getResponseByDate(LocalDate date) {
+        return surveyRepository.findByDateCompleted(date);
+    }
+
 
     // create new mood
     public MoodLog createMood(MoodLog request, LocalDateTime date, Customer customer) {

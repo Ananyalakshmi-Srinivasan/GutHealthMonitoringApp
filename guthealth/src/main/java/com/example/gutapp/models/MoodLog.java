@@ -18,12 +18,12 @@ import java.time.LocalDateTime;
 @Builder
 public class MoodLog {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "moodlogID", nullable = false)
-    private Long moodLogID;
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "moodlogID", nullable = false)
+//    private Long moodLogID;
 
     @Column(name = "date_completed", nullable = false)
-    private LocalDateTime dateCompleted;
+    private LocalDate dateCompleted;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb", nullable = false)

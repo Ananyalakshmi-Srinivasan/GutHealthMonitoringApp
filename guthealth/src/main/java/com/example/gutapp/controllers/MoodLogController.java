@@ -25,10 +25,18 @@ public class MoodLogController {
     //get frontend JSON, get current date, get current customer (dummy), use service
     public MoodLog saveMood(@RequestBody MoodLog moodLog) {
 
-        LocalDateTime today = LocalDateTime.now();
-
+        LocalDate today = LocalDate.now();
         Long customerID = 1L; // dummy user -- should give this id in the front end
         Customer customer = customerService.getCustomerByID(customerID);
+
+        if (Objects.equals(surveyService.getResponseDate(response), now)) {
+            JsonNode update = response.getAttributes();
+            MoodLog existing = MoodLogService.getResponseByDate(now).get(0);
+            return surveyService.updateResponse(customer, existing, update);
+        } else {
+            return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+        }
+
         return moodLogService.createMood(moodLog, today, customer);
     }
-}
+
