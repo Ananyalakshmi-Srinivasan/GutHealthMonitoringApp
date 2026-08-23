@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (!_formKey.currentState!.validate()) return;
 
-    final url = Uri.parse('http://localhost:8080/api/customer/login');
+    final url = Uri.parse(dotenv.env['LOGIN_URL']!);
 
     final body = {
       "email": _emailController.text.trim(),

@@ -14,9 +14,10 @@ class RecipesScreen extends StatefulWidget {
 }
 
 class _RecipesScreenState extends State<RecipesScreen> {
-
   Future<void> _openPdf(String fileName) async {
-    final Uri url = Uri.parse("http://10.0.0.2:8080/docs/$fileName");
+    //String urlString = dotenv.env['RECIPE_URL']! + fileName;
+
+    final Uri url = Uri.parse(dotenv.env['RECIPE_URL']!+fileName); // this doesn't work. but passing api endpoint does ---> not doing that as its isky!
 
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not open PDF');
