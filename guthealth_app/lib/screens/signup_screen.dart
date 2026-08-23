@@ -40,7 +40,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _submitSignUp() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final url = Uri.parse(dotenv.env['LOGIN_URL']!);
+    final url = Uri.parse(dotenv.env['SIGNUP_URL']!);
 
     final body = {
       "firstName": _firstNameController.text,
