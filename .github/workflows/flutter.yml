@@ -33,6 +33,15 @@ jobs:
           channel: "stable"
           # flutter-version: "3.24.0" 
 
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo SIGNUP_URL=${{ secrets.SIGNUP }} >> guthealth_app/.env
+          echo SURVEY_URL=${{ secrets.SURVEY }} >> guthealth_app/.env
+          echo MOOD_URL=${{ secrets.MOOD }} >> guthealth_app/.env
+          echo RECIPE_URL=${{ secrets.RECIPE }} >> guthealth_app/.env
+          echo LOGIN_URL=${{ secrets.LOGIN }} >> guthealth_app/.env
+
       - name: Install dependencies
         run: flutter pub get
 
