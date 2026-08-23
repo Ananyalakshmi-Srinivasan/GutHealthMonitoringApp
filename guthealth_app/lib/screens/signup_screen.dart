@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class SignUpScreen extends StatefulWidget {
 
   static http.Client httpClient = http.Client();
@@ -35,12 +37,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
-
-
   Future<void> _submitSignUp() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final url = Uri.parse('http://localhost:8080/api/customer/signup');
+    final url = Uri.parse(dotenv.env['SIGNUP_URL']!);
 
     final body = {
       "firstName": _firstNameController.text,

@@ -3,6 +3,8 @@ import 'package:guthealth_app/screens/home_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'calendar_screen.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class RecipesScreen extends StatefulWidget {
   final int customerId;
   const RecipesScreen({super.key,required this.customerId,});

@@ -3,6 +3,7 @@ import 'home_screen.dart';
 import 'calendar_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MoodEntry {
   final DateTime date;
@@ -85,7 +86,8 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
       return;
     }
 
-    final url = Uri.parse('http://10.0.0.2:8080/api/mood/submit');
+
+    final url = Uri.parse(dotenv.env['MOOD_URL']!); // loads uri from env file for mood, exclamation point forces run
 
     final body = {
       "emotions": selectedEmotions.map((emotion) => emotion.id).toList(),

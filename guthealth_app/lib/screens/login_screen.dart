@@ -7,6 +7,7 @@ import 'package:email_validator/email_validator.dart'; // for validating the ema
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginScreen extends StatefulWidget {
   static http.Client httpClient = http.Client();

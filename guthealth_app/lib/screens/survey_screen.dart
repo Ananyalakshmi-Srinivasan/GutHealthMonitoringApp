@@ -2,7 +2,7 @@ import 'dart:convert'; // for converting into json type to send to backend
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart'; // to make the survey
 import 'package:http/http.dart' as http; // for sending to the backend
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'home_screen.dart';
 
 class SurveyScreen extends StatefulWidget {
@@ -35,7 +35,8 @@ class SurveyScreenState extends State<SurveyScreen> {
   int get totalSteps => symptoms.length;
 
   Future<void> submitSurvey(Map<String, dynamic> formData) async {
-    final url = Uri.parse("http://10.0.2.2:8080/api/response/submit");
+    final url = Uri.parse(dotenv.env['SURVEY_URL']!);
+
       //submit used here because that's the url the springboot end is expecting the post request on!!
 
     final response = await http.post(

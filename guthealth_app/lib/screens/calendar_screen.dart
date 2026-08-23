@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart'; // for the actual calendar
 import 'mood_log.dart';
 import 'journal.dart';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CalendarScreen extends StatefulWidget {
   final int customerId;
