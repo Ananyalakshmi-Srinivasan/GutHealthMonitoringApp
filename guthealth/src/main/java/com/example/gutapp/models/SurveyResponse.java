@@ -42,7 +42,7 @@ public class SurveyResponse {
 
     // links to customer table --> many surveys can be dispatched to one customer
     @ManyToOne
-    @JoinColumn(name = "customerID", referencedColumnName = "customerID", updatable=false) // creates foreign key
+    @JoinColumn(name = "customerID", referencedColumnName = "customerID", updatable=false, nullable=false) // creates foreign key
     private Customer customerID; // the type of this column is a customer entity.
 
 }
