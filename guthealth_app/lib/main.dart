@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:guthealth_app/utils/theme/theme.dart';
-import 'screens/home_screen.dart';
+import 'screens/login_screen.dart';
 import 'firebase_options.dart';
 import 'services/fcm_service.dart';
 import 'dart:async';
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
       darkTheme: TAppTheme.darkTheme,
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(customerId : 1L),
+      home: const LoginScreen(),
 
 
         // add customisation further customisation like colour blind themes etc.
