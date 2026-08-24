@@ -23,12 +23,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       
-#      - name: Create firebase service account key
-#        env:
-#          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS }}
-#        run: |
-#          mkdir -p secrets
-#          printf '%s' "$FIREBASE_CREDENTIALS_JSON" > secrets/serviceAccountKey.json
+      - name: Create firebase service account key
+        env:
+          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          mkdir -p secrets
+          printf '%s' "$FIREBASE_CREDENTIALS_JSON" > secrets/serviceAccountKey.json
 
       - name: Create env file
         run: |
