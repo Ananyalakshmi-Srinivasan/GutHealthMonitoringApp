@@ -28,6 +28,7 @@ build/
 
 .env
 
+serviceAccountKey.json
 
 ### Maven ###
 target/
