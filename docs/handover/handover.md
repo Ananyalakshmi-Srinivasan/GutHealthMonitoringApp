@@ -147,7 +147,7 @@ For frontend local run instructions, see the [README Project Instructions](../..
 
 
 ## <a id="system-architecture"></a>System Architecture
-![techstack.png](../asserts/techstack/img.png)
+![techstack.png](../asserts/techstack/tech.png)
 ## <a id="project-structure"></a>Project Structure 
 
 This section outlines the main folders in the repository
@@ -600,12 +600,9 @@ https://www.geeksforgeeks.org/springboot/spring-boot-sending-email-via-smtp/
     
 ## <a id="database-structure"></a>Database Structure
 
-
-# ADJUST THIS !!!
-
 This is the current structure of the database in the app. 
  
-![database.png](../asserts/database/final_database.png)
+![final.png](../asserts/database/final.png)
 
 ### Quick Links
 + [Customer](#customer)
