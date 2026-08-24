@@ -63,14 +63,15 @@ The notifications feature is not set up for iOS - An apple developer account enr
 
 Firebase is used in this project for mobile app configuration and push notifications, so future developers should make sure they have:
 
-+ Access to the team's Firebase project, or at minimum access to the existing Firebase configuration files already stored in the repo.
++ Access to the team's Firebase project. This can be found if you have access to the gmail address associated with the application. At
+minimum you should be able to access  the existing Firebase configuration files already stored in the repo.
 + The Flutter Firebase configuration files present and valid:
   + `guthealth_app/lib/firebase_options.dart`
   + `guthealth_app/android/app/google-services.json`
   + `guthealth_app/ios/Runner/GoogleService-Info.plist`
 + A valid Firebase service account key for the backend notification service.
   + The private key can be downloaded from the Firebase website in service accounts at project settings. This will need to be stored in guthealth/secrets/serviceAccountKey.json
-+ The backend `FIREBASE_CREDENTIALS` environment variable pointing to that service account JSON file when running the Spring Boot application.
++ The backend `FIREBASE_CREDENTIALS` environment variable pointing to that service account JSON file when running the Spring Boot application. 
 
 #### <ins> Backend - Springboot </ins>
 
@@ -146,8 +147,7 @@ For frontend local run instructions, see the [README Project Instructions](../..
 
 
 ## <a id="system-architecture"></a>System Architecture
-![techstack.png](../asserts/techstack/techstack.png)
-
+![techstack.png](../asserts/techstack/img.png)
 ## <a id="project-structure"></a>Project Structure 
 
 This section outlines the main folders in the repository
@@ -209,7 +209,6 @@ The `docs/` folder is the main non-code knowledge base for the project. The most
 │   │   │   └── service/         core backend logic
 │   │   └── test/                service tests
 │   └── pom.xml
-
 ```
 
 The backend directories are explanations are ordered by their place in Spring Boot's Architecure Layers. 
@@ -404,8 +403,10 @@ The backend directories are explanations are ordered by their place in Spring Bo
 ├── guthealth_app/               Flutter frontend
 │   ├── lib/
 │   │   ├── screens/             UI screens 
-│   │   └── services/            FCM and client services
-│   ├── assets/                  fonts and images for frontend
+│   │   ├── services/            FCM and client services
+│   │   └── utils/               Fonts and theme configurations for the app
+│   │   │   ├── fonts/           Fonts for app
+│   │   │   ├── themes/          Contains light theme and dark theme configurations
 ```
 
 The `guthealth_app/lib/screens/` directory contains the main user-facing pages of the Flutter app.
@@ -413,7 +414,6 @@ The `guthealth_app/lib/screens/` directory contains the main user-facing pages o
 + The app entry point is `guthealth_app/lib/main.dart`.
 + The default landing page is the **login screen**.
 + Key screens in `guthealth_app/lib/screens/` are:
-
 
   + `guthealth_app/lib/screens/login_screen.dart`
     + Handles user login.
@@ -469,6 +469,12 @@ The `guthealth_app/lib/screens/` directory contains the main user-facing pages o
     + Provides access to recipe and client resource documents exposed by the backend.
     + Opens hosted PDF resources for the user.
     + Uses a hard-coded backend base URL, so future teams should update this file when switching to a local backend.
+
+The `guthealth_app/lib/utils/theme/theme.dart` directory contains the light theme and dark them configuration. 
++ Add more configurations as needed (e.g. high contrast mode)
+
+The`guthealth_app/lib/utils/theme/custom_themes/text_theme.dart` consists of the default configuration of fonts and colours for header, title and body text. 
++ Add more configurations as needed (e.g. dyslexic friendly fonts).
 
 ## <a id="feature-overview"></a>Feature Overview
 
@@ -625,20 +631,19 @@ This stores one completed symptom survey submitted by a customer.
 
 | Field | JPA / Database Type | Explanation                                                                                                                                                                                                             |
 |---|---|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `dateCompleted` | `LocalDate` / Primary Key | Primary key: Unique identifier for each survey response. Stores the date the survey was completed. In practice this represents the week/date attached to that survey entry. |
+| `dateCompleted` | `LocalDate` / Primary Key | Primary key: Unique identifier for each survey response. Stores the date the survey was completed.  |
 | `attributes` | `JsonNode` / `jsonb` | Stores the symptom answers as JSON in PostgreSQL. This allows the app to keep symptom names and scores together in one flexible field.                                                                                  |
 | `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each survey response back to the customer who submitted it. The foreign key references `customer.customerID`.                                                                           |
 
 ### <a id="moodlog"></a>MoodLog
 This stores one mood journal entry submitted by a customer.
 
-| Field | JPA / Database Type | Explanation |
-|---|---|---|
-| `moodLogID` | `Long` / Primary Key | Primary key: unique identifier for each mood log entry. |
-| `dateCompleted` | `LocalDateTime` / `date_completed` column | Stores the exact date and time when the mood log was submitted. |
+| Field | JPA / Database Type | Explanation                                                                                                                                       |
+|---|---|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| `dateCompleted` | `LocalDate` / Primary Key | Primary key: Unique identifier for each mood log. Stores the exact date when the mood log was submitted.                                          |
 | `emotions` | `JsonNode` / `jsonb` | Stores the selected emotions as JSON in PostgreSQL. This is used because a mood log can contain multiple selected mood objects in one submission. |
-| `journal` | `String` / `text` | Free-text journal entry written by the customer. |
-| `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each mood log back to the customer who submitted it. The foreign key references `customer.customerID`. |
+| `journal` | `String` / `text` | Free-text journal entry written by the customer.                                                                                                  |
+| `customerID` | `Customer` / Foreign Key | Many-to-one relationship: links each mood log back to the customer who submitted it. The foreign key references `customer.customerID`.            |
 
 ### <a id="database-relationships-and-notes"></a>Relationships and Notes
 
@@ -648,16 +653,10 @@ This stores one mood journal entry submitted by a customer.
 + Each `MoodLog` belongs to exactly one `Customer`.
 + `SurveyResponse.attributes` and `MoodLog.emotions` are both stored using PostgreSQL `jsonb`, which allows the backend to save structured frontend data without creating a separate column for every symptom or mood value.
 + `Customer.email` has a uniqueness constraint and is used during registration and login.
-+ There is currently no database-level uniqueness rule enforcing one survey response per customer per survey period.
-+ There is currently no database-level uniqueness rule enforcing one mood log per customer per day.
-
 
 ## <a id="aws-setup"></a>AWS Setup
 
-![aws.png](../asserts/techstack/aws.png)
-
-**AWS Elastic Compute Cloud (EC2) Instance and Simple Storage Service (S3) Bucket setup:**
-
+**AWS Elastic Compute Cloud (EC2) Instance and Amazon Elastic Container Registry have been used to host the backend.**
 
  **Database**
 + The database for this project is PostgreSQL 15 database hosted on an EC2 instance (currently t2.micro) running Amazon Linux.
@@ -666,46 +665,18 @@ This stores one mood journal entry submitted by a customer.
 + **User for database** : `postgres`
 + To allow for this the EC2's security group is configured to accept requests at port 5432.
 
-> [!NOTE]
-> 
-> You must have a key pair set up to be able to connect to the EC2 instance. 
-> To set this up contact a team member to generate a key pair. 
-> Once you have your key pair run `chmod 400 "GutHealthAppKey.pem"` to ensure your key is not publicly viewable.
->
-
 **Backend**
 
 + The backend is also hosted on the same instance.
-+ We used a public S3 bucket connected to our EC2 instance to store our jar file.
-+ This was then copied from the bucket to the instance and saved in a new directory named `guthealthapp` 
-+ After this a new service file called `guthealthapp.service` was added to the `etc/systemd/system `folder in the EC2 to automatically boot the jar file and keep it alive and ready for front end requests!
-+ If you wish to mimic this setup in your own EC2 instance here's the template for your own version off `guthealthapp.service` :
++ Docker images have been built and pushed to a private Elastic Container Registry (ECR) on any pushes to the main branch. The steps for this are defined in the `cd.yml` workflow file.
++ For the updates to propagate to the EC2, you must:
+  + Use `docker ps --all` to check if any containers linked to the gutapp image are running. 
+  + Shutdown any running containers using `docker stop <your-container-name>` and remove the container using `docker rm <your-container-name>`
+  + Login to your ECR using `aws ecr get-login-password --region <your-ecr-region> | docker login --username AWS --password-stdin <your-ecr-uri>
+  + Pull the latest image using `docker pull <your-ecr-uri>`.
+  + Run a new container using ` docker run -d --name <your-container-name> -p <your-ec2-port>:<your-localhost-port> <your-ecr-url>`.
 
-    ```
-    [Unit]
-    Description=GutHealthApp
-    After=network.target postgresql.service
-    [Service]
-    User=ec2-user
-    ExecStart=/usr/bin/java -Xms512m -Xmx2g -jar home/ec2-user/<your-directory-name->/<your-jar-file-name>
-    Restart=always
-    RestartSec=10
-    Environment="SPRING_PROFILES_ACTIVE=prod"
-    Environment="SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:<port>/<your-database-name>"
-    Environment="SPRING_DATASOURCE_USERNAME=<your_database_name>"
-    Environment="SPRING_DATASOURCE_PASSWORD=<your_database_password>"
-    Environment="SPRING_MAIL_USERNAME=ferrocalmupdates@gmail.com"
-    Environment="SPRING_MAIL_PASSWORD=<your-app-password>"
-    [Install]
-    WantedBy=multi-user.target
-    ```
-
-> [!Warning] 
-> 
-> Strictly speaking, using a public S3 bucket is not a very safe method of transfer because anyone can access your files.
-> 
-> If we had had more time we would have used an AWS Elastic Container Registry to push our docker images to from our workflow and then pulled the image from this registry to deploy to the EC2 instance using SSH.  
-
+    
 > [!Note]
 > 
 > For more guidance on how we configured our AWS setup check ```/docs/research/``` for this file: ```AWS Deployment Notes and Guides.pdf```
@@ -724,25 +695,11 @@ Before any further development make the following bug fixes and tweaks to the ex
      + Hence, past-data graphs for a real user does not reflect the data they just submitted.
      + **Next Step**: Pass the authenticated customer ID from the frontend instead of using the hard-coded `1L`.
 
-   ## gettting fixed
-   + The symptom log flow is creating duplicate responses instead of updating an existing response for the same period.
-     + `SurveyScreen` only sends new data through `POST /api/response/submit`,
-     + `SurveyService.createResponse(...)` always creates a new row,
-     + There is no unique rule enforcing one response per day for a customer. 
-     + Users may accidentally submit the same symptom log twice.
-     + Downstream graphing and export data can become noisy or misleading.
-
-   ## above getting fixed 
-
-   + The frontend survey page still uses a hard-coded deployed backend URL. We should use environment variables. 
-     + `survey_screen.dart` directly calls `http://<ec2-endpoint>/api/response/submit`.
-     + Local development and environment switching is tedious as a result. 
-     + If the deployed backend URL changes, the app must be rebuilt with code changes.
-
 **2. View Previous Data Page**
 
 + The past data page contains the same customer-mapping issue as the survey page, so graphs do not show the response a user has just logged.
 + The page also uses a hard-coded deployed backend URL rather than shared configuration.
++ `SymptomGraphData` function in `SurveyController` commented as it causes errors with the remove of Integer Ids from SurveyResponse and MoodLog entities.  
 
 **3. Calendar Page**
 + At the moment there is no page linked to the `View Symptom Data` button on the Calendar . 
@@ -753,8 +710,8 @@ Before any further development make the following bug fixes and tweaks to the ex
 
 + Mood log currently does not support loading and editing an existing entry for the current day.
   + If a user returns later to add or change their journal, they must reselect moods because the screen is not pre-filled from saved backend data.
-  + **Next Steps**: To fix this add a controller endpoint and frontend flow wired to the existing `updateMood(...)` backend service method.
-    + Also change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
+  + **Next Steps**: Change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
+    + Add a backend endpoint to fetch a mood log by customer and date.
 + The controller currently ignores the real logged-in user and always saves the mood log against dummy customer `1L`. (same issue as Symptom Log Page)
 + `CalendarScreen` does not fetch real mood data from the backend. Its `moodForDay(...)` function currently generates a placeholder mood locally from the date, so the emoji shown there is not a true persisted mood log.
   + The journal displayed after submission is currently passed through navigation rather than being re-fetched from backend storage.
@@ -762,10 +719,9 @@ Before any further development make the following bug fixes and tweaks to the ex
     
 ### <a id="suggested-future-developments"></a>Suggested future developments
 
-+ Add a backend endpoint to fetch a mood log by customer and date.
-+ Add a `PUT` or `PATCH` endpoint for editing an existing mood log.
++ Add T&Cs page so customers can opt in to have their data collected. 
++ Reactivate firebase configuration for notifications with new API keys. 
 + Update `CalendarScreen` so it displays real backend data rather than placeholder values.
-
 + The app needs to have a function that asynchronously sends data to Ferryx every two weeks. 
   + This is to allow Ferryx's data analysts so they can gauge the effectiveness of Ferrocalm 
   + Currently, our data export function allows us you to save files as csvs. By sending a request to the `GET /api/response/export` endpoint.
@@ -783,7 +739,7 @@ Before any further development make the following bug fixes and tweaks to the ex
   + Filtering for dietary requirements
   + Recommendations from food log history
 + Food Log page - A page where users will be able to log the meals they ate in a day. This would be linked to the calendar page where they could view past days meals
-+ Chat room for customers to share tips and recipes with each other.  
++ Look into Spring Security to encrypt backend data transmissions 
 
 ## <a id="further-documentation"></a>Further Documentation 
 
