@@ -38,7 +38,7 @@ jobs:
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo FERROCALM_EMAIL=${{ secrets.FERROCALM_EMAIL }} >> .env
           echo FERROCALM_PASSWORD=${{ secrets.FERROCALM_PASSWORD }} >> .env
-#          echo FIREBASE_CREDENTIALS=./secrets/serviceAccountKey.json >> .env
+          echo FIREBASE_CREDENTIALS=./secrets/serviceAccountKey.json >> .env
 
       - name: Build with Maven
         run: mvn clean install -DskipTests
