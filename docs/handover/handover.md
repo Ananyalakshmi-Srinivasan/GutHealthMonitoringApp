@@ -705,7 +705,10 @@ Before any further development make the following bug fixes and tweaks to the ex
 
 **4. Mood Log Page**
 
-+ Mood log currently does not support loading and editing an existing entry for the current day.
++ Mood log currently does not support loading and editing an existing entry for the current day. It is creating duplicate responses instead of updating an existing response for the same period.
+    + `MoodLog` only sends new data through `POST /api/mood/submit`, `MoodLogService.createResponse(...)` always creates a new row,
+    + There is no unique rule enforcing one response per day for a customer.
+    + Users may accidentally submit the same log twice.
   + If a user returns later to add or change their journal, they must reselect moods because the screen is not pre-filled from saved backend data.
   + **Next Steps**: Change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
     + Add a backend endpoint to fetch a mood log by customer and date.
@@ -713,7 +716,6 @@ Before any further development make the following bug fixes and tweaks to the ex
 + `CalendarScreen` does not fetch real mood data from the backend. Its `moodForDay(...)` function currently generates a placeholder mood locally from the date, so the emoji shown there is not a true persisted mood log.
   + The journal displayed after submission is currently passed through navigation rather than being re-fetched from backend storage.
 
-    
 ### <a id="suggested-future-developments"></a>Suggested future developments
 
 + Add T&Cs page so customers can opt in to have their data collected. 

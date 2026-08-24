@@ -6,7 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 @Getter
 @Setter
 @Data
@@ -18,12 +18,8 @@ import java.time.LocalDateTime;
 @Builder
 public class MoodLog {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "moodlogID", nullable = false)
-    private Long moodLogID;
-
-    @Column(name = "date_completed", nullable = false)
-    private LocalDateTime dateCompleted;
+    @Column(name = "date_completed", nullable = false, unique = true)
+    private LocalDate dateCompleted;
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb", nullable = false)
@@ -34,6 +30,6 @@ public class MoodLog {
 
     // many mood logs belong to one customer
     @ManyToOne
-    @JoinColumn(name = "customerID", referencedColumnName = "customerID")
+    @JoinColumn(name = "customerID", referencedColumnName = "customerID", nullable = false, updatable=false)
     private Customer customerID;
 }

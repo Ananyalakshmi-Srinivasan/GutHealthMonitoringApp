@@ -125,7 +125,7 @@ class SurveyServiceTests {
         when(surveyRepository.save(any())).thenReturn(existing);
 
         //call update
-        SurveyResponse result = surveyService.updateResponse(customer,existing, newAttributes);
+        SurveyResponse result = surveyService.updateResponse(customer,existing,newAttributes);
 
         System.out.println(existing.getAttributes());
 

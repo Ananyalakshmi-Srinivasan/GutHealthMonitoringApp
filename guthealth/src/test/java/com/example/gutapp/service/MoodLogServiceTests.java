@@ -5,8 +5,9 @@ import com.example.gutapp.models.MoodLog;
 import com.example.gutapp.repository.MoodLogRepository;
 import com.example.gutapp.repository.CustomerRepository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,7 +58,7 @@ class MoodLogServiceTests {
         request.setEmotions(emotionsNode);
         request.setJournal(null);
 
-        LocalDateTime date = LocalDateTime.now();
+        LocalDate date = LocalDate.now();
 
         when(moodLogRepository.save(any(MoodLog.class)))
                 .thenAnswer(i -> i.getArguments()[0]);
@@ -83,7 +84,7 @@ class MoodLogServiceTests {
         request.setEmotions(emotionsNode);
         request.setJournal(journalEntry);
 
-        LocalDateTime date = LocalDateTime.now();
+        LocalDate date = LocalDate.now();
 
         when(moodLogRepository.save(any(MoodLog.class)))
                 .thenAnswer(i -> i.getArguments()[0]);
@@ -99,44 +100,60 @@ class MoodLogServiceTests {
 
     //Get mood by ID
     @Test
-    void testGetMoodByID() {
+    void testGetMoodByDate() {
 
         MoodLog moodLog = new MoodLog();
-        moodLog.setJournal("Existing mood");
+        LocalDate now = LocalDate.now();
 
-        when(moodLogRepository.findByMoodLogID(1L))
-                .thenReturn(Optional.of(moodLog));
+        moodLog.setDateCompleted(now);
 
-        Optional<MoodLog> result = moodLogService.getMoodByID(1L);
+        when(moodLogRepository.findByDateCompleted(now))
+                .thenReturn(List.of(moodLog));
 
-        assertTrue(result.isPresent());
-        assertEquals("Existing mood", result.get().getJournal());
+        List<MoodLog> result = moodLogService.getMoodByDate(now);
+
+        assertEquals(1, result.size());
+        verify(moodLogRepository).findByDateCompleted(now);
     }
 
      //Update mood
     @Test
     void testUpdateMood() throws Exception {
+        LocalDate now = LocalDate.now();
 
-        String jsonString = "{ \"sad\": 2 }";
+
+        String jsonString = "{ \"Sad\": 8 }";
         JsonNode emotionsNode = objectMapper.readTree(jsonString);
 
         MoodLog existing = new MoodLog();
+        existing.setEmotions(emotionsNode);
         existing.setJournal("Old mood");
 
-        MoodLog request = new MoodLog();
-        request.setEmotions(emotionsNode);
-        request.setJournal("Updated mood");
+        Customer customer = customerService.getCustomerByID(1L); // pull dummy customer
+        moodLogService.createMood(existing,now,customer);
 
-        when(moodLogRepository.findById(1L))
-                .thenReturn(Optional.of(existing));
+        when(moodLogRepository.findByDateCompleted(now))
+                .thenReturn(List.of(existing));
 
         when(moodLogRepository.save(any(MoodLog.class)))
                 .thenReturn(existing);
 
-        MoodLog updated = moodLogService.updateMood(1L, request);
+        String updatedJson = "{ \"Happy\": 1 }";
+        JsonNode newNode = objectMapper.readTree(jsonString);
 
+        existing.setEmotions(newNode);
+        String journal = "Updated mood";
+        existing.setJournal(journal);
+
+        when(moodLogRepository.findByDateCompleted(now))
+                .thenReturn(List.of(existing));
+        when(moodLogRepository.save(any(MoodLog.class)))
+                .thenReturn(existing);
+
+        //call update
+        MoodLog updated = moodLogService.updateMood(customer,existing,newNode,journal);
+
+        assertEquals(existing.getEmotions(), updated.getEmotions());
         assertEquals("Updated mood", updated.getJournal());
-
-        verify(moodLogRepository).save(existing);
     }
 }
