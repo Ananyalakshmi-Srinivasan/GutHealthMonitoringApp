@@ -73,6 +73,15 @@ minimum you should be able to access  the existing Firebase configuration files 
   + The private key can be downloaded from the Firebase website in service accounts at project settings. This will need to be stored in guthealth/secrets/serviceAccountKey.json
 + The backend `FIREBASE_CREDENTIALS` environment variable pointing to that service account JSON file when running the Spring Boot application. 
 
+> [!IMPORTANT]
+>
+> The FirebaseConfig.java file causes no problems when trying to run the application from a local machine (even with database hosted on springboot), however, when trying to run the docker image of the application the config can't find the necessary env variable. 
+> 
+ > This could be because envrionment variables aren't passed correctly to the secrets. 
+> 
+> Future developers should try to correct this before trying other solutions. 
+
+
 #### <ins> Backend - Springboot </ins>
 
 To work on the backend component in `guthealth/` make sure  the following are installed:
