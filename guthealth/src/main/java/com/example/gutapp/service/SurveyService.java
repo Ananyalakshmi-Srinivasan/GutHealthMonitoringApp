@@ -58,13 +58,6 @@ public class SurveyService {
         return surveyRepository.save(response);
     }
 
-    // update function to allow customers to update previous responses to surveys
-
-//    @Query(value = "UPDATE survey_response SET attributes = :symptomDetails WHERE date_completed = :date IN (SELECT date_completed FROM survey_response WHERE customer = :customer)", nativeQuery = true)
-//    public SurveyResponse updateResponse(@Param("date")LocalDate date, @Param("symptomDetails")JsonNode symptomDetails, @Param("customer")Customer customer, SurveyResponse response) {
-//        return response;
-//    }
-
     public SurveyResponse updateResponse(Customer customer, SurveyResponse existing, JsonNode update) {
         existing.setAttributes(update);
         existing.setCustomerID(customer);
