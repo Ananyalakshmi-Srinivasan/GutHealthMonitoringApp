@@ -2,7 +2,7 @@ name: CD
 
 on:
   push:
-    branches: [ main, 33-bug-aws-backend-doesnt-run ]
+    branches: [ main ]
 
 jobs:
   build-backend:
@@ -23,12 +23,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       
-#      - name: Create firebase service account key
-#        env:
-#          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS }}
-#        run: |
-#          mkdir -p secrets
-#          printf '%s' "$FIREBASE_CREDENTIALS_JSON" > secrets/serviceAccountKey.json
+      - name: Create firebase service account key
+        env:
+          FIREBASE_CREDENTIALS_JSON: ${{ secrets.FIREBASE_CREDENTIALS }}
+        run: |
+          mkdir -p secrets
+          printf '%s' "$FIREBASE_CREDENTIALS_JSON" > secrets/serviceAccountKey.json
 
       - name: Create env file
         run: |
@@ -38,7 +38,7 @@ jobs:
           echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
           echo FERROCALM_EMAIL=${{ secrets.FERROCALM_EMAIL }} >> .env
           echo FERROCALM_PASSWORD=${{ secrets.FERROCALM_PASSWORD }} >> .env
-#          echo FIREBASE_CREDENTIALS=./secrets/serviceAccountKey.json >> .env
+          echo FIREBASE_CREDENTIALS=./secrets/serviceAccountKey.json >> .env
 
       - name: Build with Maven
         run: mvn clean install -DskipTests
