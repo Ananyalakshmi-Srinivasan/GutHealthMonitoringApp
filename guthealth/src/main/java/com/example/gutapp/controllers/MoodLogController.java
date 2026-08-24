@@ -6,7 +6,9 @@ import com.example.gutapp.service.MoodLogService;
 import com.example.gutapp.service.CustomerService;
 
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping("/api/mood")
@@ -29,14 +31,13 @@ public class MoodLogController {
         Long customerID = 1L; // dummy user -- should give this id in the front end
         Customer customer = customerService.getCustomerByID(customerID);
 
-        if (Objects.equals(surveyService.getResponseDate(response), now)) {
-            JsonNode update = response.getAttributes();
-            MoodLog existing = MoodLogService.getResponseByDate(now).get(0);
-            return surveyService.updateResponse(customer, existing, update);
+        if (moodLogService.getMoodDate(moodLog) == today) {
+            JsonNode moodUpdate = moodLog.getEmotions();
+            String journalUpdate = moodLog.getJournal();
+            MoodLog existing = moodLogService.getMoodByDate(today).get(0);
+            return moodLogService.updateMood(customer, existing, moodUpdate, journalUpdate);
         } else {
-            return surveyService.createResponse(response, now, customer); // 1 is the dummy customerid for now
+            return moodLogService.createMood(moodLog, today, customer); // 1 is the dummy customerid for now
         }
-
-        return moodLogService.createMood(moodLog, today, customer);
     }
-
+}

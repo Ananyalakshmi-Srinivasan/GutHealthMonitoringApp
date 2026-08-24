@@ -4,9 +4,11 @@ import com.example.gutapp.models.Customer;
 import com.example.gutapp.models.MoodLog;
 import com.example.gutapp.repository.MoodLogRepository;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.JsonNode;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.List;
 
 @Service
 public class MoodLogService {
@@ -17,17 +19,17 @@ public class MoodLogService {
         this.moodLogRepository = moodLogRepository;
     }
 
-    // get mood log
-    public Optional<MoodLog> getMoodByID(Long ID) {
-        return moodLogRepository.findByMoodLogID(ID);
+    public LocalDate getMoodDate(MoodLog moodLog) {
+        return moodLog.getDateCompleted();
     }
-    public List<SurveyResponse> getResponseByDate(LocalDate date) {
-        return surveyRepository.findByDateCompleted(date);
+
+    public List<MoodLog> getMoodByDate(LocalDate date) {
+        return moodLogRepository.findByDateCompleted(date);
     }
 
 
     // create new mood
-    public MoodLog createMood(MoodLog request, LocalDateTime date, Customer customer) {
+    public MoodLog createMood(MoodLog request, LocalDate date, Customer customer) {
 
         MoodLog newMood = new MoodLog();
         newMood.setDateCompleted(date);
@@ -39,22 +41,26 @@ public class MoodLogService {
     }
 
     // update existing mood
-    public MoodLog updateMood(Long ID, MoodLog moodLog) {
-        Optional<MoodLog> mood = moodLogRepository.findById(ID);
-        if (mood.isPresent()) {
-            MoodLog existingMood = mood.get();
-            existingMood.setEmotions(moodLog.getEmotions());
-            existingMood.setJournal(moodLog.getJournal());
-            return moodLogRepository.save(existingMood);
+    public MoodLog updateMood(Customer customer, MoodLog existing, JsonNode moodUpdate, String journalUpdate) {
+        existing.setEmotions(moodUpdate);
+        existing.setJournal(journalUpdate);
+        existing.setCustomerID(customer);
+        return moodLogRepository.save(existing);
+    }
+
+    boolean responseExists(LocalDate date) {
+
+        if (getMoodByDate(date) != null) {
+            return true;
+        } else  {
+            return false;
         }
-        System.out.println("MoodLog not found with id: " + ID);
-        return null;
     }
 
     //deletes mood log.
 
-    public void deleteMoodLogById(Long id) {
-        moodLogRepository.deleteById(id);
+    public void deleteMoodLog(LocalDate date) {
+        moodLogRepository.deleteByDateCompleted(date);
     }
 
     public void deleteAllMoodLog(Long id) {

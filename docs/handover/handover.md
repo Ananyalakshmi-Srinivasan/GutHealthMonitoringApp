@@ -724,16 +724,6 @@ Before any further development make the following bug fixes and tweaks to the ex
      + Hence, past-data graphs for a real user does not reflect the data they just submitted.
      + **Next Step**: Pass the authenticated customer ID from the frontend instead of using the hard-coded `1L`.
 
-   ## gettting fixed
-   + The symptom log flow is creating duplicate responses instead of updating an existing response for the same period.
-     + `SurveyScreen` only sends new data through `POST /api/response/submit`,
-     + `SurveyService.createResponse(...)` always creates a new row,
-     + There is no unique rule enforcing one response per day for a customer. 
-     + Users may accidentally submit the same symptom log twice.
-     + Downstream graphing and export data can become noisy or misleading.
-
-   ## above getting fixed 
-
    + The frontend survey page still uses a hard-coded deployed backend URL. We should use environment variables. 
      + `survey_screen.dart` directly calls `http://<ec2-endpoint>/api/response/submit`.
      + Local development and environment switching is tedious as a result. 
@@ -751,15 +741,17 @@ Before any further development make the following bug fixes and tweaks to the ex
 
 **4. Mood Log Page**
 
-+ Mood log currently does not support loading and editing an existing entry for the current day.
++ Mood log currently does not support loading and editing an existing entry for the current day. It is creating duplicate responses instead of updating an existing response for the same period.
+    + `MoodLog` only sends new data through `POST /api/mood/submit`, `MoodLogService.createResponse(...)` always creates a new row,
+    + There is no unique rule enforcing one response per day for a customer.
+    + Users may accidentally submit the same log twice.
   + If a user returns later to add or change their journal, they must reselect moods because the screen is not pre-filled from saved backend data.
-  + **Next Steps**: To fix this add a controller endpoint and frontend flow wired to the existing `updateMood(...)` backend service method.
+  + **Next Steps**: To fix this add a controller endpoint and frontend flow wired to the existing `updateMood(...)` backend service method. (See usage in Survey_Response controller to find technique)
     + Also change the frontend flow so that opening the mood log page for a date with an existing record pre-populates the selected moods and journal.
 + The controller currently ignores the real logged-in user and always saves the mood log against dummy customer `1L`. (same issue as Symptom Log Page)
 + `CalendarScreen` does not fetch real mood data from the backend. Its `moodForDay(...)` function currently generates a placeholder mood locally from the date, so the emoji shown there is not a true persisted mood log.
   + The journal displayed after submission is currently passed through navigation rather than being re-fetched from backend storage.
 
-    
 ### <a id="suggested-future-developments"></a>Suggested future developments
 
 + Add a backend endpoint to fetch a mood log by customer and date.
