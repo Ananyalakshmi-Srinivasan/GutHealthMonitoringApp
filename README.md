@@ -1,5 +1,5 @@
 >[!Note]
->Below is a copy of my Second Year Software Engineering Project. I worked as Project Manager on this project and made this copy to continue working on it over the summer as part of my summer internship with Ferryx. This repo contains the most recent version of the application. Please check the 'Next Steps' section to continue work on this project. 
+>Below is a copy of my Second Year Software Engineering Project. I worked as Project Manager on this project and made this copy to continue working on it as part of my summer internship with Ferryx. This repo contains the most recent version of the application. Please check the 'Next Steps' section in `handover.md ` to continue work on this project. 
 
 # Gut Health Monitoring App - Second Year Group Software Engineering Project
 <img width="650" height="175" alt="image" src="https://storage.googleapis.com/msgsndr/xYCrZNFIGAeWEm3RsHo3/media/6501a1ba892e5d3dde740127.png" /><br><br>
