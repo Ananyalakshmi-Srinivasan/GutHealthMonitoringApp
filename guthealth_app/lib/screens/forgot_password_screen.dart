@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart'; // for validating emails 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
 
