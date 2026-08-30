@@ -231,7 +231,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           ),
         ),
         // Bottom navigation bar
-        bottomNavigationBar: (
+        bottomNavigationBar: Container(
           child: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _handleBottomNavigation,

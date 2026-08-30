@@ -252,7 +252,7 @@ class _EmotionSearchPageState extends State<EmotionSearchPage> {
           ),
         ),
 
-      bottomNavigationBar: (
+      bottomNavigationBar: Container(
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: _handleBottomNavigation,

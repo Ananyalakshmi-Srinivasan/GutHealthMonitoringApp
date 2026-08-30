@@ -138,7 +138,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
         ),
       ),
 
-      bottomNavigationBar: (
+      bottomNavigationBar: Container(
         child: BottomNavigationBar(
           onTap: _handleBottomNavigation,
           type: BottomNavigationBarType.fixed,

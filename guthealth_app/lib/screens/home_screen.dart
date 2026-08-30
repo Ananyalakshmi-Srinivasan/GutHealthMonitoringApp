@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       // Bottom navigation bar
-      bottomNavigationBar: (
+      bottomNavigationBar: Container(
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: _handleBottomNavigation,
