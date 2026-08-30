@@ -727,6 +727,9 @@ Before any further development make the following bug fixes and tweaks to the ex
 
 ### <a id="suggested-future-developments"></a>Suggested future developments
 
+
++ Figure out why dart cd fails.
++ Extend env variable configuration so that frontend connects to backend correctly and safely. At the moment the built version we install on a phone doesn't connect to the AWS endpoint containing the backend!
 + Add T&Cs page so customers can opt in to have their data collected. 
 + Reactivate firebase configuration for notifications with new API keys. 
 + Update `CalendarScreen` so it displays real backend data rather than placeholder values.
